@@ -5,27 +5,6 @@ public class Arkanian {
     }
 
     public static void main(String[] args) {
-        String horizontal_line = "________________________________________\n";
-        String bot_name = "Arkanian";
-
-        System.out.println(horizontal_line
-                + "Hello! I'm "
-                + bot_name
-                + ". \nWhat can I do for you?\n"
-                + horizontal_line
-                + "Bye! Have a nice day :)\n"
-                + horizontal_line
-        );
-    }
-}
-
-import java.util.Scanner;
-
-public class Arkanian {
-    public Arkanian() {
-    }
-
-    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String horizontal_line = "________________________________________\n";
         String bot_name = "Arkanian";
