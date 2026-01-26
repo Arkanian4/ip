@@ -6,6 +6,10 @@ public class Task {
     public Task(String name) {
         this.task_name = name;
         this.parsed_task = this.task_name.split(" ");
+
+        if (this.parsed_task.length == 1) {
+            throw new InvalidTaskFormatException("bruh... you didn't type any task");
+        }
     }
 
     public boolean isDone() {

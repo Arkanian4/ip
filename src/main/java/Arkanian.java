@@ -15,79 +15,81 @@ public class Arkanian {
         System.out.println(message);
 
         for (; cont_convo; System.out.println(horizontal_line + message + horizontal_line)) {
-            String raw_input = scanner.nextLine();
-            Input parsed_input = new Input(raw_input);
+            try {
+                String raw_input = scanner.nextLine();
+                Input parsed_input = new Input(raw_input);
 
-            String instr = parsed_input.getInstr();
+                String instr = parsed_input.getInstr();
 
-            int idx;
-            Task task;
+                int idx;
+                Task task;
 
-            switch (instr) {
-                case "bye":
-                    message = "Bye! Hope to see you again :)\n";
-                    cont_convo = false;
-                    break;
+                switch (instr) {
+                    case "bye":
+                        message = "Bye! Hope to see you again :)\n";
+                        cont_convo = false;
+                        break;
 
-                case "list":
-                    message = task_list.toString();
-                    break;
+                    case "list":
+                        message = task_list.toString();
+                        break;
 
-                case "mark":
-                    idx = parsed_input.getIdx();
-                    task = task_list.getTask(idx);
-                    task.setDone();
-                    message = "Nice! I've marked this task as done:\n"
-                        + task
-                        + "\n";
-                    break;
+                    case "mark":
+                        idx = parsed_input.getIdx();
+                        task = task_list.getTask(idx);
+                        task.setDone();
+                        message = "Nice! I've marked this task as done:\n"
+                                + task
+                                + "\n";
+                        break;
 
-                case "unmark":
-                    idx = parsed_input.getIdx();
-                    task = task_list.getTask(idx);
-                    task.setNotDone();
-                    message = "OK, I've marked this task as not done yet:\n"
-                        + task
-                        + "\n";
-                    break;
+                    case "unmark":
+                        idx = parsed_input.getIdx();
+                        task = task_list.getTask(idx);
+                        task.setNotDone();
+                        message = "OK, I've marked this task as not done yet:\n"
+                                + task
+                                + "\n";
+                        break;
 
-                case "todo":
-                    task = new ToDos(raw_input);
-                    task_list.addTask(task);
-                    message = "Got it. I've added this task:\n"
-                            + task
-                            + "\nNow you have "
-                            + task_list.getTaskCount()
-                            + " tasks in the list."
-                            + "\n";
-                    break;
+                    case "todo":
+                        task = new ToDos(raw_input);
+                        task_list.addTask(task);
+                        message = "Got it. I've added this task:\n"
+                                + task
+                                + "\nNow you have "
+                                + task_list.getTaskCount()
+                                + " tasks in the list."
+                                + "\n";
+                        break;
 
-                case "event":
-                    task = new Events(raw_input);
-                    task_list.addTask(task);
-                    message = "Got it. I've added this task:\n"
-                            + task
-                            + "\nNow you have "
-                            + task_list.getTaskCount()
-                            + " tasks in the list."
-                            + "\n";
-                    break;
+                    case "event":
+                        task = new Events(raw_input);
+                        task_list.addTask(task);
+                        message = "Got it. I've added this task:\n"
+                                + task
+                                + "\nNow you have "
+                                + task_list.getTaskCount()
+                                + " tasks in the list."
+                                + "\n";
+                        break;
 
-                case "deadline":
-                    task = new Deadlines(raw_input);
-                    task_list.addTask(task);
-                    message = "Got it. I've added this task:\n"
-                            + task
-                            + "\nNow you have "
-                            + task_list.getTaskCount()
-                            + " tasks in the list."
-                            + "\n";
-                    break;
+                    case "deadline":
+                        task = new Deadlines(raw_input);
+                        task_list.addTask(task);
+                        message = "Got it. I've added this task:\n"
+                                + task
+                                + "\nNow you have "
+                                + task_list.getTaskCount()
+                                + " tasks in the list."
+                                + "\n";
+                        break;
 
-                default:
-                    message = "added: " + raw_input + "\n";
-                    task_list.addTask(new Task(raw_input));
-
+                    default:
+                        throw new UnknownInputException("what nonsense r u saying bruh");
+                }
+            } catch (InvalidTaskFormatException | UnknownInputException e) {
+                message = e.getMessage();
             }
         }
 

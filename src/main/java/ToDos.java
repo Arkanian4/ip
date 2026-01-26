@@ -12,6 +12,10 @@ public class ToDos extends Task {
         }
 
         super.task_name = task_name.trim();
+
+        if (super.task_name == "") {
+            throw new InvalidTaskFormatException("bruh... I need more deets");
+        }
     }
 
     @Override

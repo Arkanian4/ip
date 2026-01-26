@@ -10,6 +10,12 @@ public class Events extends Task {
         int from_idx = getIdxOf("/from");
         int to_idx = getIdxOf("/to");
 
+        if (from_idx == -1) {
+            throw new InvalidTaskFormatException("bruh... you didn't specify the start time/date");
+        } else if (to_idx == -1) {
+            throw new InvalidTaskFormatException("bruh... you didn't specify the end time/date");
+        }
+
         String task_name = "";
         String from = "";
         String to = "";
@@ -29,6 +35,10 @@ public class Events extends Task {
         super.task_name = task_name.trim();
         this.from = from.trim();
         this.to = to.trim();
+
+        if (super.task_name == "" || this.from == "" || this.to == "") {
+            throw new InvalidTaskFormatException("bruh... I need more deets");
+        }
     }
 
     @Override

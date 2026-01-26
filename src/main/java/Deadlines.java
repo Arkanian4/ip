@@ -9,6 +9,10 @@ public class Deadlines extends Task {
         String task_name = "";
         String due_date = "";
 
+        if (due_date_idx == -1) {
+            throw new InvalidTaskFormatException("bruh... you didn't give me a deadline");
+        }
+
         for (int i = 1; i < super.parsed_task.length; i++) {
             String word = super.parsed_task[i];
 
@@ -21,6 +25,10 @@ public class Deadlines extends Task {
 
         super.task_name = task_name.trim();
         this.due_date = due_date.trim();
+
+        if (super.task_name == "" || this.due_date == "") {
+            throw new InvalidTaskFormatException("bruh... I need more deets");
+        }
     }
 
     @Override
