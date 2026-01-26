@@ -52,6 +52,18 @@ public class Arkanian {
                                 + "\n";
                         break;
 
+                    case "delete":
+                        idx = parsed_input.getIdx();
+                        task = task_list.getTask(idx);
+                        task_list.delete(idx);
+                        message = "Noted. I've removed this task:\n"
+                                + task
+                                + "\nNow you have "
+                                + task_list.getTaskCount()
+                                + " tasks in the list."
+                                + "\n";
+                        break;
+
                     case "todo":
                         task = new ToDos(raw_input);
                         task_list.addTask(task);

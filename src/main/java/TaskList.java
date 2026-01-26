@@ -1,17 +1,22 @@
+import java.util.ArrayList;
+
 public class TaskList {
-    private Task[] task_list = new Task[100];
-    private static int task_count = 0;
+    private ArrayList<Task> task_list = new ArrayList<>();
 
     public int getTaskCount() {
-        return this.task_count;
+        return task_list.size();
     }
 
     public Task getTask(int idx) {
-        return task_list[idx];
+        return task_list.get(idx);
     }
 
     public void addTask(Task task) {
-        task_list[task_count++] = task;
+        task_list.add(task);
+    }
+
+    public void delete(int idx) {
+        task_list.remove(idx);
     }
 
     @Override
