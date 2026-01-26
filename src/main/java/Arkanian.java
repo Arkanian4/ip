@@ -36,7 +36,7 @@ public class Arkanian {
                 case "mark":
                     idx = parsed_input.getIdx();
                     task = task_list.getTask(idx);
-                    task.setdone();
+                    task.setDone();
                     message = "Nice! I've marked this task as done:\n"
                         + task
                         + "\n";
@@ -49,6 +49,39 @@ public class Arkanian {
                     message = "OK, I've marked this task as not done yet:\n"
                         + task
                         + "\n";
+                    break;
+
+                case "todo":
+                    task = new ToDos(raw_input);
+                    task_list.addTask(task);
+                    message = "Got it. I've added this task:\n"
+                            + task
+                            + "\nNow you have "
+                            + task_list.getTaskCount()
+                            + " tasks in the list."
+                            + "\n";
+                    break;
+
+                case "event":
+                    task = new Events(raw_input);
+                    task_list.addTask(task);
+                    message = "Got it. I've added this task:\n"
+                            + task
+                            + "\nNow you have "
+                            + task_list.getTaskCount()
+                            + " tasks in the list."
+                            + "\n";
+                    break;
+
+                case "deadline":
+                    task = new Deadlines(raw_input);
+                    task_list.addTask(task);
+                    message = "Got it. I've added this task:\n"
+                            + task
+                            + "\nNow you have "
+                            + task_list.getTaskCount()
+                            + " tasks in the list."
+                            + "\n";
                     break;
 
                 default:
