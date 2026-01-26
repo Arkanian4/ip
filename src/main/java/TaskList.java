@@ -14,4 +14,22 @@ public class TaskList {
         task_list[task_count++] = task;
     }
 
+    @Override
+    public String toString() {
+
+        String str = "";
+
+        for (int i = 0; i < this.getTaskCount(); i++) {
+            Task task = this.getTask(i);
+
+            str = str
+                    + (i + 1)
+                    + ". "
+                    + task
+                    + "\n";
+        }
+
+        return str;
+    }
+
 }
