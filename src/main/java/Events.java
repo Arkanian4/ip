@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.time.LocalDateTime;
 
 public class Events extends Task {
     private String from;
@@ -46,12 +46,20 @@ public class Events extends Task {
         return super.task_name;
     }
 
-    public String getFrom() {
-	    return this.from;
+    public LocalDateTime getFrom() {
+	    return DateTimeParser.convert(this.from);
     }
 
-    public String getTo() {
-	    return this.to;
+    public String getFromString() {
+	    return this.getFrom().toString();
+    }
+
+    public LocalDateTime getTo() {
+	    return DateTimeParser.convert(this.to);
+    }
+
+    public String getToString() {
+	    return this.getTo().toString();
     }
 
     @Override
@@ -59,9 +67,9 @@ public class Events extends Task {
         return "[E]"
                 + super.toString()
                 + " (from: "
-                + this.from
+                + this.getFromString()
                 + "; to: "
-                + this.to
+                + this.getToString()
                 + ")";
     }
 

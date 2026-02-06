@@ -21,7 +21,7 @@ public class Save {
 						+ taskName
 						+ "\n";
 			} else if (task instanceof Deadlines) {
-				String deadline = ((Deadlines) task).getDeadline();
+				String deadline = ((Deadlines) task).getDeadlineString();
 
 				taskString = "D | "
 						+ isDone
@@ -31,8 +31,8 @@ public class Save {
 						+ deadline
 						+ "\n";
 			} else if (task instanceof Events) {
-				String from = ((Events) task).getFrom();
-				String to = ((Events) task).getTo();
+				String from = ((Events) task).getFromString();
+				String to = ((Events) task).getToString();
 
 				taskString = "E | "
 						+ isDone

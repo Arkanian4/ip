@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+
 public class Deadlines extends Task {
     private String due_date;
 
@@ -36,8 +38,12 @@ public class Deadlines extends Task {
         return this.task_name;
     }
 
-    public String getDeadline() {
-	    return this.due_date;
+    public LocalDateTime getDeadline() {
+	    return DateTimeParser.convert(this.due_date);
+    }
+
+    public String getDeadlineString() {
+	    return this.getDeadline().toString();
     }
 
     @Override
@@ -45,7 +51,7 @@ public class Deadlines extends Task {
         return "[D]"
                 + super.toString()
                 + " (by: "
-                + this.due_date
+                + this.getDeadlineString()
                 + ")";
     }
 }
