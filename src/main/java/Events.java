@@ -68,7 +68,7 @@ public class Events extends Task {
                 + super.toString()
                 + " (from: "
                 + this.getFromString()
-                + "; to: "
+                + " to: "
                 + this.getToString()
                 + ")";
     }
