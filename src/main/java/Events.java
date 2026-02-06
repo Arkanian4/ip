@@ -46,6 +46,14 @@ public class Events extends Task {
         return super.task_name;
     }
 
+    public String getFrom() {
+	    return this.from;
+    }
+
+    public String getTo() {
+	    return this.to;
+    }
+
     @Override
     public String toString() {
         return "[E]"

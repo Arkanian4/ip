@@ -10,7 +10,8 @@ public class Arkanian {
         String bot_name = "Arkanian";
         String message = horizontal_line + "Hello! I'm " + bot_name + ". \nWhat can I do for you?\n" + horizontal_line;
         boolean cont_convo = true;
-        TaskList task_list = new TaskList();
+        TaskList task_list = Save.initializeData();
+        // TaskList task_list = new TaskList();
 
         System.out.println(message);
 
@@ -41,6 +42,7 @@ public class Arkanian {
                         message = "Nice! I've marked this task as done:\n"
                                 + task
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     case "unmark":
@@ -50,6 +52,7 @@ public class Arkanian {
                         message = "OK, I've marked this task as not done yet:\n"
                                 + task
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     case "delete":
@@ -62,6 +65,7 @@ public class Arkanian {
                                 + task_list.getTaskCount()
                                 + " tasks in the list."
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     case "todo":
@@ -73,6 +77,7 @@ public class Arkanian {
                                 + task_list.getTaskCount()
                                 + " tasks in the list."
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     case "event":
@@ -84,6 +89,7 @@ public class Arkanian {
                                 + task_list.getTaskCount()
                                 + " tasks in the list."
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     case "deadline":
@@ -95,11 +101,15 @@ public class Arkanian {
                                 + task_list.getTaskCount()
                                 + " tasks in the list."
                                 + "\n";
+                        Save.saveData(task_list);
                         break;
 
                     default:
                         throw new UnknownInputException("what nonsense r u saying bruh");
                 }
+
+                //saved_data.saveData(task_list);
+
             } catch (InvalidTaskFormatException | UnknownInputException e) {
                 message = e.getMessage();
             }

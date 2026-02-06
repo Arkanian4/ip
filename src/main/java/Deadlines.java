@@ -36,6 +36,10 @@ public class Deadlines extends Task {
         return this.task_name;
     }
 
+    public String getDeadline() {
+	    return this.due_date;
+    }
+
     @Override
     public String toString() {
         return "[D]"

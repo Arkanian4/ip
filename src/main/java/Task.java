@@ -12,7 +12,7 @@ public class Task {
         }
     }
 
-    public boolean isDone() {
+    public boolean getIsDone() {
         return is_done;
     }
 
@@ -36,6 +36,7 @@ public class Task {
     public String getTaskName() {
         return this.task_name;
     }
+
 
     @Override
     public String toString() {
