@@ -1,3 +1,7 @@
+package arkanian.taskmanager;
+
+import arkanian.arkanianexceptions.InvalidTaskFormatException;
+
 public class Task {
     protected String task_name;
     protected String[] parsed_task;
@@ -36,7 +40,6 @@ public class Task {
     public String getTaskName() {
         return this.task_name;
     }
-
 
     @Override
     public String toString() {

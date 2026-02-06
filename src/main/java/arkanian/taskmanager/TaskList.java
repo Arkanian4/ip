@@ -1,3 +1,5 @@
+package arkanian.taskmanager;
+
 import java.util.ArrayList;
 
 public class TaskList {
