@@ -36,7 +36,7 @@ public class Arkanian {
                         break;
 
                     case "mark":
-                        idx = parsed_input.getIdx();
+                        idx = parsed_input.getIdx() - 1;
                         task = task_list.getTask(idx);
                         task.setDone();
                         message = "Nice! I've marked this task as done:\n"
@@ -46,7 +46,7 @@ public class Arkanian {
                         break;
 
                     case "unmark":
-                        idx = parsed_input.getIdx();
+                        idx = parsed_input.getIdx() - 1;
                         task = task_list.getTask(idx);
                         task.setNotDone();
                         message = "OK, I've marked this task as not done yet:\n"
@@ -56,7 +56,7 @@ public class Arkanian {
                         break;
 
                     case "delete":
-                        idx = parsed_input.getIdx();
+                        idx = parsed_input.getIdx() - 1;
                         task = task_list.getTask(idx);
                         task_list.delete(idx);
                         message = "Noted. I've removed this task:\n"
