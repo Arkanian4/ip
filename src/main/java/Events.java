@@ -51,7 +51,11 @@ public class Events extends Task {
     }
 
     public String getFromString() {
-	    return this.getFrom().toString();
+	    String date_time = this.getFrom().toString();
+
+        return DateTimeParser.getDateString(date_time)
+                + " "
+                + DateTimeParser.getTimeString(date_time);
     }
 
     public LocalDateTime getTo() {
@@ -59,7 +63,11 @@ public class Events extends Task {
     }
 
     public String getToString() {
-	    return this.getTo().toString();
+	    String date_time = this.getTo().toString();
+
+        return DateTimeParser.getDateString(date_time)
+                + " "
+                + DateTimeParser.getTimeString(date_time);
     }
 
     @Override

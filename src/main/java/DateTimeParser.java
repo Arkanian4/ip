@@ -47,4 +47,12 @@ public class DateTimeParser {
 
     }
 
+    public static String getDateString(String dt) {
+        return dt.substring(0, 10);
+    }
+
+    public static String getTimeString(String dt) {
+        return dt.substring(11);
+    }
+
 }

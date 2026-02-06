@@ -43,7 +43,11 @@ public class Deadlines extends Task {
     }
 
     public String getDeadlineString() {
-	    return this.getDeadline().toString();
+	    String date_time = this.getDeadline().toString();
+
+        return DateTimeParser.getDateString(date_time)
+                + " "
+                + DateTimeParser.getTimeString(date_time);
     }
 
     @Override
