@@ -124,6 +124,21 @@ public class Save {
 
 	public static TaskList initializeData() {
 
+		File folder = new File("memory");
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+
+		File file = new File(folder, "saved.txt");
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch (IOException e) {
+				System.out.println("Unable to create memory file");
+			}
+		}
+
+
 		TaskList taskList = new TaskList();
 
 		try {
