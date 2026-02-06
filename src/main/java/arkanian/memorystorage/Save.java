@@ -1,8 +1,16 @@
+package arkanian.memorystorage;
+
 import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.IOException;
+
+import arkanian.taskmanager.Deadlines;
+import arkanian.taskmanager.Events;
+import arkanian.taskmanager.Task;
+import arkanian.taskmanager.TaskList;
+import arkanian.taskmanager.ToDos;
 
 public class Save {
 
@@ -42,16 +50,15 @@ public class Save {
 						+ from
 						+ " | "
 						+ to
-						+ "\n"; 
+						+ "\n";
 			}
 
-			fwrite.write(taskString);			
+			fwrite.write(taskString);
 		}
 		fwrite.close();
 	}
 
-
-    public static void saveData(TaskList data) {
+	public static void saveData(TaskList data) {
 		try {
 			FileWriter fwrite = new FileWriter("memory/saved.txt");
 			writeMemory(data, fwrite);
@@ -59,7 +66,7 @@ public class Save {
 			System.out.println("Unable to save data: " + e.getMessage());
 		}
 	}
-		
+
 	private static TaskList readMemory() throws FileNotFoundException {
 
 		File fread = new File("memory/saved.txt");
@@ -68,7 +75,7 @@ public class Save {
 
 		while (s.hasNext()) {
 			String[] taskStringArray = s.nextLine().split(" \\| ");
- 
+
 			String taskType = taskStringArray[0];
 			String isDone = taskStringArray[1];
 			String taskName = taskStringArray[2];
@@ -76,38 +83,38 @@ public class Save {
 			Task task = null;
 
 			switch (taskType) {
-			case "T":
-				taskString = "todo "
-						+ taskName;
-				task = new ToDos(taskString);
-				break;
+				case "T":
+					taskString = "todo "
+							+ taskName;
+					task = new ToDos(taskString);
+					break;
 
-			case "D":
-				String deadline = taskStringArray[3];
-				
-				taskString = "deadline "
-						+ taskName
-						+ " /by "
-						+ deadline;
+				case "D":
+					String deadline = taskStringArray[3];
 
-				task = new Deadlines(taskString);
-				break;
+					taskString = "deadline "
+							+ taskName
+							+ " /by "
+							+ deadline;
 
-			case "E":
-				String from = taskStringArray[3];
-				String to = taskStringArray[4];
+					task = new Deadlines(taskString);
+					break;
 
-				taskString = "event "
-						+ taskName
-						+ " /from "
-						+ from
-						+ " /to "
-						+ to;
-				task = new Events(taskString);
-				break;
+				case "E":
+					String from = taskStringArray[3];
+					String to = taskStringArray[4];
 
-			default:
-				//	throw new IllegalArgumentException("Unknown task type: " + taskType);
+					taskString = "event "
+							+ taskName
+							+ " /from "
+							+ from
+							+ " /to "
+							+ to;
+					task = new Events(taskString);
+					break;
+
+				default:
+					// throw new IllegalArgumentException("Unknown task type: " + taskType);
 			}
 
 			if (isDone.equals("1")) {
@@ -120,7 +127,6 @@ public class Save {
 
 		return taskList;
 	}
-
 
 	public static TaskList initializeData() {
 
@@ -138,12 +144,11 @@ public class Save {
 			}
 		}
 
-
 		TaskList taskList = new TaskList();
 
 		try {
 			taskList = readMemory();
-		} catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			System.out.println("Unable to locate memory: " + e.getMessage());
 		}
 
@@ -151,5 +156,3 @@ public class Save {
 	}
 
 }
-		
-		
