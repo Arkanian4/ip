@@ -15,6 +15,10 @@ public class Input {
         return split_input[0];
     }
 
+    public String getTaskName() {
+        return split_input[1];
+    }
+
     public int getIdx() {
         return Integer.valueOf(split_input[1]);
     }
