@@ -35,6 +35,7 @@ public class Ui {
         int idx;
         Task task;
         boolean cont_convo = true;
+
         try {
             switch (instr) {
             case "bye":
@@ -114,6 +115,12 @@ public class Ui {
                         + "\n";
                 Save.saveData(task_list);
                 break;
+
+            case "find":
+                message = "Here are the tasks matching your search:\n"
+                        + this.task_list.find(parsed_input.getTaskName()).toString();
+                break;
+
 
             default:
                 throw new UnknownInputException("what nonsense r u saying bruh");

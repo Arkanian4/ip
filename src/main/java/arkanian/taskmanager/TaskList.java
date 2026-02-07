@@ -21,6 +21,17 @@ public class TaskList {
         task_list.remove(idx);
     }
 
+    public TaskList find(String keyword) {
+        TaskList filtered_list = new TaskList();
+
+        for (Task task : this.task_list) {
+            if (task.getTaskName().contains(keyword)) {
+                filtered_list.addTask(task);
+            }
+        }
+        return filtered_list;
+    }
+
     @Override
     public String toString() {
 
