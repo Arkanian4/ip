@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Converts strings of dates and/or times into LocalDateTime objects
+ */
 public class DateTimeParser {
 
     private static String[] datePatterns = {
@@ -25,6 +28,11 @@ public class DateTimeParser {
             "h.m a"
     };
 
+    /**
+     *
+     * @param input string version of the date-time
+     * @return LocalDateTime object version of the date-time
+     */
     public static LocalDateTime convert(String input) {
         LocalDateTime dateTime = null;
         for (String dp : datePatterns) {

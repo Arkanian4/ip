@@ -5,6 +5,10 @@ import java.time.LocalDateTime;
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 import arkanian.userprompts.DateTimeParser;
 
+/**
+ * Represents a Deadline task
+ * includes a deadline for completion of task
+ */
 public class Deadlines extends Task {
     private String due_date;
 
@@ -42,6 +46,11 @@ public class Deadlines extends Task {
         return this.task_name;
     }
 
+    /**
+     * Resturns the deadline as a LocalDateTime object
+     *
+     * @return the date and time of the deadline
+     */
     public LocalDateTime getDeadline() {
         return DateTimeParser.convert(this.due_date);
     }
