@@ -1,5 +1,9 @@
 package arkanian.userprompts;
 
+/**
+ * Filters a raw String input from the user to
+ * extract relevant fields
+ */
 public class Input {
     final private String[] split_input;
 
