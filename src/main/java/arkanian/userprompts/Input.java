@@ -1,7 +1,7 @@
 package arkanian.userprompts;
 
 public class Input {
-    private final String[] split_input;
+    final private String[] split_input;
 
     public Input(String input) {
         this.split_input = input.split(" ");

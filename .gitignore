@@ -19,3 +19,5 @@ src/main/java/Unmark.java
 
 /text-ui-test/ACTUAL.TXT
 text-ui-test/EXPECTED-UNIX.TXT
+
+test/

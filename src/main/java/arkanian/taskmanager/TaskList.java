@@ -44,7 +44,7 @@ public class TaskList {
                     + (i + 1)
                     + ". "
                     + task
-                    + "\n";
+                    + "\n\n";
         }
 
         return str;

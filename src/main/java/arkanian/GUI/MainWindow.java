@@ -1,0 +1,53 @@
+package arkanian.GUI;
+
+import arkanian.userprompts.Arkanian;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+/**
+ * Controller for the main GUI.
+ */
+public class MainWindow extends AnchorPane {
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox dialogContainer;
+    @FXML
+    private TextField userInput;
+    @FXML
+    private Button sendButton;
+
+    private Arkanian arkanian;
+
+    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/dog1.jpg"));
+    private Image ArkanianImage = new Image(this.getClass().getResourceAsStream("/images/dog2.jpg"));
+
+    @FXML
+    public void initialize() {
+        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+    }
+
+    /** Injects the Arkanian instance */
+    public void setArkanian(Arkanian a) {
+        arkanian = a;
+    }
+
+    /**
+     * Creates two dialog boxes, one echoing user input and the other containing Arkanian's reply and then appends them to
+     * the dialog container. Clears the user input after processing.
+     */
+    @FXML
+    private void handleUserInput() {
+        String input = userInput.getText();
+        String response = arkanian.getResponse(input);
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(input, userImage),
+                DialogBox.getArkanianDialog(response, ArkanianImage)
+        );
+        userInput.clear();
+    }
+}
