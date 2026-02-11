@@ -1,9 +1,7 @@
 package arkanian.userprompts;
-
 import java.util.Scanner;
 
 import arkanian.memorystorage.Save;
-import arkanian.userprompts.Ui;
 import arkanian.taskmanager.TaskList;
 
 public class Arkanian {
@@ -15,6 +13,7 @@ public class Arkanian {
     private TaskList task_list = Save.initializeData();
     private Ui ui = new Ui(BOT_NAME, task_list);
 
+    /*
     public void Run() {
 
         while (cont_convo) {
@@ -22,8 +21,14 @@ public class Arkanian {
         }
 
     }
+    */
 
     public static void main(String[] args) {
-        new Arkanian().Run();
+        // new Arkanian().Run();
+        System.out.println("Hi, I'm Arkanian! How can i help you");
+    }
+
+    public String getResponse(String s) {
+        return ui.processInput(s);
     }
 }

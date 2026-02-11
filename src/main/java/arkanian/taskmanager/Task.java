@@ -43,7 +43,7 @@ public class Task {
 
     @Override
     public String toString() {
-        String check_mark = is_done ? "X" : " ";
+        String check_mark = is_done ? "X" : "   ";
         return "[" + check_mark + "] " + this.task_name;
     }
 }
