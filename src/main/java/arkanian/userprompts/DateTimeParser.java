@@ -11,21 +11,21 @@ import java.time.format.DateTimeParseException;
 public class DateTimeParser {
 
     private static String[] datePatterns = {
-            "d-MM-yyyy",
-            "d/MM/yyyy",
-            "d MMM yyyy",
-            "d MMMM yyyy",
-            "yyyy-MM-dd",
-            "ddMMyyyy"
+        "d-MM-yyyy",
+        "d/MM/yyyy",
+        "d MMM yyyy",
+        "d MMMM yyyy",
+        "yyyy-MM-dd",
+        "ddMMyyyy"
     };
 
     private static String[] timePatterns = {
-            "H:mm",
-            "HHmm",
-            "hma",
-            "hm a",
-            "h.ma",
-            "h.m a"
+        "H:mm",
+        "HHmm",
+        "hma",
+        "hm a",
+        "h.ma",
+        "h.m a"
     };
 
     /**

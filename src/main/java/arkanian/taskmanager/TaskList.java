@@ -10,14 +10,19 @@ public class TaskList {
     }
 
     public Task getTask(int idx) {
+        assert idx >= 0 && idx < task_list.size()
+                : "Invalid index passed to TaskList.getTask()";
         return task_list.get(idx);
     }
 
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task";
         task_list.add(task);
     }
 
     public void delete(int idx) {
+        assert idx >= 0 && idx < task_list.size()
+                : "Invalid index passed to TaskList.delete()";
         task_list.remove(idx);
     }
 
