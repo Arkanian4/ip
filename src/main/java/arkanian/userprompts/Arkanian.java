@@ -4,8 +4,14 @@ import java.util.Scanner;
 import arkanian.memorystorage.Save;
 import arkanian.taskmanager.TaskList;
 
+/**
+ * Entry point of the Arkanian chatbot application.
+ * <p>
+ * This class initializes the bot, loads persisted task data,
+ * and delegates user input processing to the Ui class.
+ */
 public class Arkanian {
-    private final String BOT_NAME = "Arkanian";
+    private static final String BOT_NAME = "Arkanian";
     private final Scanner scanner = new Scanner(System.in);
     private final TaskList taskList = Save.initializeData();
     private final Ui ui = new Ui(BOT_NAME, taskList);

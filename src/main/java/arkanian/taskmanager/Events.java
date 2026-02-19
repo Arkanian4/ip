@@ -5,10 +5,29 @@ import java.time.LocalDateTime;
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 import arkanian.userprompts.DateTimeParser;
 
+/**
+ * Represents an event task.
+ * <p>
+ * An Event task includes a description, a start date/time,
+ * and an end date/time.
+ */
 public class Events extends Task {
     private final String from;
     private final String to;
 
+    /**
+     * Constructs an Event task from a user input string.
+     * <p>
+     * The expected format is:
+     * <pre>
+     * event task description /from start date/time /to end date/time
+     * </pre>
+     *
+     * @param event The full user input string for the event task.
+     * @throws InvalidTaskFormatException If the input format is invalid,
+     *                                    or if the description, start time,
+     *                                    or end time is missing.
+     */
     public Events(String event) {
         super(event);
 

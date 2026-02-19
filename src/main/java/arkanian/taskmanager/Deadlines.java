@@ -12,6 +12,16 @@ import arkanian.userprompts.DateTimeParser;
 public class Deadlines extends Task {
     private final String dueDate;
 
+    /**
+     * Constructs a Deadline task from a user input string.
+     * <p>
+     * The expected format is:
+     * deadline task description /by due date
+     *
+     * @param deadline The full user input string for the deadline task.
+     * @throws InvalidTaskFormatException If the input format is invalid,
+     *                                    or if the description or due date is missing.
+     */
     public Deadlines(String deadline) {
         super(deadline);
 
@@ -42,7 +52,7 @@ public class Deadlines extends Task {
     }
 
     /**
-     * Resturns the deadline as a LocalDateTime object
+     * Returns the deadline as a LocalDateTime object
      *
      * @return the date and time of the deadline
      */

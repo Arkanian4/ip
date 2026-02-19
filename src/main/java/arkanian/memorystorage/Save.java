@@ -1,10 +1,10 @@
 package arkanian.memorystorage;
 
-import java.io.FileWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import arkanian.taskmanager.Deadlines;
 import arkanian.taskmanager.Events;
@@ -12,7 +12,15 @@ import arkanian.taskmanager.Task;
 import arkanian.taskmanager.TaskList;
 import arkanian.taskmanager.ToDos;
 
+/**
+ * Handles persistent storage of tasks.
+ * <p>
+ * This class is responsible for saving task data to disk
+ * and loading previously saved tasks into memory when
+ * the application starts.
+ */
 public class Save {
+
     private static void writeMemory(TaskList data, FileWriter fwrite) throws IOException {
         String taskString = "";
 
@@ -57,6 +65,11 @@ public class Save {
         fwrite.close();
     }
 
+    /**
+     * Saves the provided TaskList to persistent storage.
+     * <p>
+     * @param data The TaskList to be saved.
+     */
     public static void saveData(TaskList data) {
         try {
             FileWriter fwrite = new FileWriter("memory/saved.txt");
@@ -128,6 +141,15 @@ public class Save {
         return taskList;
     }
 
+    /**
+     * Initializes the application's persistent storage.
+     * <p>
+     * Ensures that the required folder and file exist.
+     * If they do not exist, they are created. Then previously
+     * saved tasks are loaded into a TaskList.
+     * <p>
+     * @return A TaskList initialized from persistent storage.
+     */
     public static TaskList initializeData() {
 
         File folder = new File("memory");

@@ -1,20 +1,32 @@
 package arkanian.userprompts;
 
+import arkanian.arkanianexceptions.InvalidTaskFormatException;
+import arkanian.arkanianexceptions.UnknownInputException;
+import arkanian.memorystorage.Save;
 import arkanian.taskmanager.Deadlines;
 import arkanian.taskmanager.Events;
 import arkanian.taskmanager.Task;
 import arkanian.taskmanager.TaskList;
 import arkanian.taskmanager.ToDos;
-import arkanian.memorystorage.Save;
-import arkanian.arkanianexceptions.InvalidTaskFormatException;
-import arkanian.arkanianexceptions.UnknownInputException;
 
+
+/**
+ * Handles user interaction and input processing for the Arkanian task manager bot.
+ * Prints welcome messages and interprets commands to manipulate tasks in a TaskList.
+ */
 public class Ui {
 
     private final String horizontalLine = "________________________________________\n";
 
-    private TaskList taskList;
+    private final TaskList taskList;
 
+    /**
+     * Constructs a Ui instance with a specified bot name and task list.
+     * Prints a welcome message to the user.
+     * <p>
+     * @param botName  the name of the bot to display in messages
+     * @param taskList the task list the UI will manage
+     */
     public Ui(String botName, TaskList taskList) {
         this.taskList = taskList;
 
@@ -25,6 +37,14 @@ public class Ui {
                 + horizontalLine);
     }
 
+    /**
+     * Processes raw user input and executes the corresponding task management command.
+     * Supports commands such as "bye", "list", "mark", "unmark", "delete", "todo",
+     * "event", "deadline", and "find".
+     * <p>
+     * @param rawInput the raw input string entered by the user
+     * @return a formatted message indicating the result of the command
+     */
     public String processInput(String rawInput) {
 
         Input parsedInput = new Input(rawInput);
