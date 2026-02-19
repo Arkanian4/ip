@@ -35,7 +35,7 @@ dependencies {
 
 test {
 
-    enabled = false;
+    enabled = false
     useJUnitPlatform()
 
     testLogging {
@@ -50,7 +50,7 @@ test {
 }
 
 application {
-    mainClass.set("Main")
+    mainClass.set("arkanian.gui.Main")
 }
 
 shadowJar {

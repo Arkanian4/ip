@@ -1,12 +1,12 @@
 package arkanian.userprompts;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import arkanian.arkanianexceptions.UnknownInputException;
-import arkanian.taskmanager.TaskList;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+//import arkanian.arkanianexceptions.UnknownInputException;
+import arkanian.taskmanager.TaskList;
 
 public class UiTest {
 
@@ -15,7 +15,7 @@ public class UiTest {
 
         Ui ui = new Ui("test_bot", new TaskList());
 
-        assertEquals(false, ui.processInput("bye"));
+        assertEquals("Bye! Hope to see you again :)\n", ui.processInput("bye"));
     }
 
     @Test

@@ -5,26 +5,26 @@ package arkanian.userprompts;
  * extract relevant fields
  */
 public class Input {
-    final private String[] split_input;
+    private final String[] splitInput;
 
     public Input(String input) {
-        this.split_input = input.split(" ");
+        this.splitInput = input.split(" ");
     }
 
     public int len() {
-        return split_input.length;
+        return splitInput.length;
     }
 
     public String getInstr() {
-        return split_input[0];
+        return splitInput[0];
     }
 
     public String getTaskName() {
-        return split_input[1];
+        return splitInput[1];
     }
 
     public int getIdx() {
-        return Integer.valueOf(split_input[1]);
+        return Integer.parseInt(splitInput[1]);
     }
 
 }

@@ -1,20 +1,19 @@
-
 package arkanian.taskmanager;
 
 
-import arkanian.arkanianexceptions.InvalidTaskFormatException;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import arkanian.arkanianexceptions.InvalidTaskFormatException;
 
 public class ToDosTest {
 
     @Test
     public void constructor_emptyInput_throwsException() {
         InvalidTaskFormatException exception = assertThrows(
-                InvalidTaskFormatException.class,
-                () -> new ToDos("todo")
+                InvalidTaskFormatException.class, () -> new ToDos("todo")
         );
     }
 

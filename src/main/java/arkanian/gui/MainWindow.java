@@ -1,4 +1,4 @@
-package arkanian.GUI;
+package arkanian.gui;
 
 import arkanian.userprompts.Arkanian;
 import javafx.fxml.FXML;
@@ -23,8 +23,8 @@ public class MainWindow extends AnchorPane {
 
     private Arkanian arkanian;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/dog1.jpg"));
-    private Image ArkanianImage = new Image(this.getClass().getResourceAsStream("/images/dog2.jpg"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/dog1.jpg"));
+    private final Image arkanianImage = new Image(this.getClass().getResourceAsStream("/images/dog2.jpg"));
 
     @FXML
     public void initialize() {
@@ -37,7 +37,8 @@ public class MainWindow extends AnchorPane {
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Arkanian's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other
+     * containing Arkanian's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
@@ -46,7 +47,7 @@ public class MainWindow extends AnchorPane {
         String response = arkanian.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getArkanianDialog(response, ArkanianImage)
+                DialogBox.getArkanianDialog(response, arkanianImage)
         );
         userInput.clear();
     }

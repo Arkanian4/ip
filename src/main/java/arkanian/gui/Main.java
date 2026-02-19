@@ -1,4 +1,4 @@
-package arkanian.GUI;
+package arkanian.gui;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
-    private Arkanian arkanian = new Arkanian();
+    private final Arkanian arkanian = new Arkanian();
 
     @Override
     public void start(Stage stage) {

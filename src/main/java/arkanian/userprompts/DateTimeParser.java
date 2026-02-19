@@ -10,7 +10,7 @@ import java.time.format.DateTimeParseException;
  */
 public class DateTimeParser {
 
-    private static String[] datePatterns = {
+    private static final String[] datePatterns = {
         "d-MM-yyyy",
         "d/MM/yyyy",
         "d MMM yyyy",
@@ -19,7 +19,7 @@ public class DateTimeParser {
         "ddMMyyyy"
     };
 
-    private static String[] timePatterns = {
+    private static final String[] timePatterns = {
         "H:mm",
         "HHmm",
         "hma",
@@ -29,7 +29,6 @@ public class DateTimeParser {
     };
 
     /**
-     *
      * @param input string version of the date-time
      * @return LocalDateTime object version of the date-time
      */
@@ -42,6 +41,7 @@ public class DateTimeParser {
                 try {
                     dateTime = LocalDateTime.parse(input, formatter);
                 } catch (DateTimeParseException ignore) {
+                    System.out.println("Unable to recognize DateTime Pattern");
                 }
             }
         }
@@ -52,6 +52,7 @@ public class DateTimeParser {
                 LocalDate date = LocalDate.parse(input, formatter);
                 dateTime = date.atStartOfDay();
             } catch (DateTimeParseException ignore) {
+                System.out.println("Unable to recognize Date Pattern");
             }
         }
 

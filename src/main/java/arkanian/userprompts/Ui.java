@@ -1,124 +1,143 @@
 package arkanian.userprompts;
 
+import arkanian.arkanianexceptions.InvalidTaskFormatException;
+import arkanian.arkanianexceptions.UnknownInputException;
+import arkanian.memorystorage.Save;
 import arkanian.taskmanager.Deadlines;
 import arkanian.taskmanager.Events;
 import arkanian.taskmanager.Task;
 import arkanian.taskmanager.TaskList;
 import arkanian.taskmanager.ToDos;
-import arkanian.memorystorage.Save;
-import arkanian.arkanianexceptions.InvalidTaskFormatException;
-import arkanian.arkanianexceptions.UnknownInputException;
 
+
+/**
+ * Handles user interaction and input processing for the Arkanian task manager bot.
+ * Prints welcome messages and interprets commands to manipulate tasks in a TaskList.
+ */
 public class Ui {
 
-    private String horizontal_line = "________________________________________\n";
+    private final String horizontalLine = "________________________________________\n";
 
-    private String message;
+    private final TaskList taskList;
 
-    private TaskList task_list;
+    /**
+     * Constructs a Ui instance with a specified bot name and task list.
+     * Prints a welcome message to the user.
+     * <p>
+     * @param botName  the name of the bot to display in messages
+     * @param taskList the task list the UI will manage
+     */
+    public Ui(String botName, TaskList taskList) {
+        this.taskList = taskList;
 
-    public Ui(String bot_name, TaskList task_list) {
-        this.task_list = task_list;
-
-        System.out.println(horizontal_line
+        System.out.println(horizontalLine
                 + "Hello! I'm "
-                + bot_name
+                + botName
                 + ". \nWhat can I do for you?\n"
-                + horizontal_line);
+                + horizontalLine);
     }
 
-    public String processInput(String raw_input) {
+    /**
+     * Processes raw user input and executes the corresponding task management command.
+     * Supports commands such as "bye", "list", "mark", "unmark", "delete", "todo",
+     * "event", "deadline", and "find".
+     * <p>
+     * @param rawInput the raw input string entered by the user
+     * @return a formatted message indicating the result of the command
+     */
+    public String processInput(String rawInput) {
 
-        Input parsed_input = new Input(raw_input);
-        String instr = parsed_input.getInstr();
+        Input parsedInput = new Input(rawInput);
+        String instr = parsedInput.getInstr();
 
         int idx;
         Task task;
-        boolean cont_convo = true;
+        boolean isBye = false;
 
+        String message;
         try {
             switch (instr) {
             case "bye":
                 message = "Bye! Hope to see you again :)\n";
-                cont_convo = false;
+                isBye = true;
                 break;
 
             case "list":
-                message = task_list.toString();
+                message = taskList.toString();
                 break;
 
             case "mark":
-                idx = parsed_input.getIdx() - 1;
-                task = task_list.getTask(idx);
+                idx = parsedInput.getIdx() - 1;
+                task = taskList.getTask(idx);
                 task.setDone();
                 message = "Nice! I've marked this task as done:\n"
                         + task
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "unmark":
-                idx = parsed_input.getIdx() - 1;
-                task = task_list.getTask(idx);
+                idx = parsedInput.getIdx() - 1;
+                task = taskList.getTask(idx);
                 task.setNotDone();
                 message = "OK, I've marked this task as not done yet:\n"
                         + task
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "delete":
-                idx = parsed_input.getIdx() - 1;
-                task = task_list.getTask(idx);
-                task_list.delete(idx);
+                idx = parsedInput.getIdx() - 1;
+                task = taskList.getTask(idx);
+                taskList.delete(idx);
                 message = "Noted. I've removed this task:\n"
                         + task
                         + "\nNow you have "
-                        + task_list.getTaskCount()
+                        + taskList.getTaskCount()
                         + " tasks in the list."
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "todo":
-                task = new ToDos(raw_input);
-                task_list.addTask(task);
+                task = new ToDos(rawInput);
+                taskList.addTask(task);
                 message = "Got it. I've added this task:\n"
                         + task
                         + "\nNow you have "
-                        + task_list.getTaskCount()
+                        + taskList.getTaskCount()
                         + " tasks in the list."
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "event":
-                task = new Events(raw_input);
-                task_list.addTask(task);
+                task = new Events(rawInput);
+                taskList.addTask(task);
                 message = "Got it. I've added this task:\n"
                         + task
                         + "\nNow you have "
-                        + task_list.getTaskCount()
+                        + taskList.getTaskCount()
                         + " tasks in the list."
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "deadline":
-                task = new Deadlines(raw_input);
-                task_list.addTask(task);
+                task = new Deadlines(rawInput);
+                taskList.addTask(task);
                 message = "Got it. I've added this task:\n"
                         + task
                         + "\nNow you have "
-                        + task_list.getTaskCount()
+                        + taskList.getTaskCount()
                         + " tasks in the list."
                         + "\n";
-                Save.saveData(task_list);
+                Save.saveData(taskList);
                 break;
 
             case "find":
                 message = "Here are the tasks matching your search:\n"
-                        + this.task_list.find(parsed_input.getTaskName()).toString();
+                        + this.taskList.find(parsedInput.getTaskName()).toString();
                 break;
 
 
@@ -129,9 +148,9 @@ public class Ui {
             message = e.getMessage();
         }
 
-        message = horizontal_line
+        message = horizontalLine
                 + message
-                + horizontal_line;
+                + horizontalLine;
 
         return message;
 

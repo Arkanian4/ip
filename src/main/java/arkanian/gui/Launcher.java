@@ -1,4 +1,4 @@
-package arkanian.GUI;
+package arkanian.gui;
 
 import javafx.application.Application;
 

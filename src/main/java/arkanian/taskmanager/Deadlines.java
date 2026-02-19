@@ -10,57 +10,62 @@ import arkanian.userprompts.DateTimeParser;
  * includes a deadline for completion of task
  */
 public class Deadlines extends Task {
-    private String due_date;
+    private final String dueDate;
 
+    /**
+     * Constructs a Deadline task from a user input string.
+     * <p>
+     * The expected format is:
+     * deadline task description /by due date
+     *
+     * @param deadline The full user input string for the deadline task.
+     * @throws InvalidTaskFormatException If the input format is invalid,
+     *                                    or if the description or due date is missing.
+     */
     public Deadlines(String deadline) {
         super(deadline);
 
-        int due_date_idx = super.getIdxOf("/by");
-        String task_name = "";
-        String due_date = "";
+        int dueDateIdx = super.getIdxOf("/by");
+        String taskName = "";
+        String dueDate = "";
 
-        if (due_date_idx == -1) {
+        if (dueDateIdx == -1) {
             throw new InvalidTaskFormatException("bruh... you didn't give me a deadline");
         }
 
-        for (int i = 1; i < super.parsed_task.length; i++) {
-            String word = super.parsed_task[i];
+        for (int i = 1; i < super.parsedTask.length; i++) {
+            String word = super.parsedTask[i];
 
-            if (i < due_date_idx) {
-                task_name = task_name + word + " ";
-            } else if (due_date_idx < i) {
-                due_date = due_date + word + " ";
+            if (i < dueDateIdx) {
+                taskName = taskName + word + " ";
+            } else if (dueDateIdx < i) {
+                dueDate = dueDate + word + " ";
             }
         }
 
-        super.task_name = task_name.trim();
-        this.due_date = due_date.trim();
+        super.taskName = taskName.trim();
+        this.dueDate = dueDate.trim();
 
-        if (super.task_name == "" || this.due_date == "") {
+        if (super.taskName.isEmpty() || this.dueDate.isEmpty()) {
             throw new InvalidTaskFormatException("bruh... I need more deets");
         }
     }
 
-    @Override
-    public String getTaskName() {
-        return this.task_name;
-    }
-
     /**
-     * Resturns the deadline as a LocalDateTime object
+     * Returns the deadline as a LocalDateTime object
      *
      * @return the date and time of the deadline
      */
     public LocalDateTime getDeadline() {
-        return DateTimeParser.convert(this.due_date);
+        return DateTimeParser.convert(this.dueDate);
     }
 
     public String getDeadlineString() {
-        String date_time = this.getDeadline().toString();
+        String dateTime = this.getDeadline().toString();
 
-        return DateTimeParser.getDateString(date_time)
+        return DateTimeParser.getDateString(dateTime)
                 + " "
-                + DateTimeParser.getTimeString(date_time);
+                + DateTimeParser.getTimeString(dateTime);
     }
 
     @Override

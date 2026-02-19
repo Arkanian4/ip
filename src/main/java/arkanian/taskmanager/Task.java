@@ -2,35 +2,46 @@ package arkanian.taskmanager;
 
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 
+/**
+ * Represents a task with a name and completion status.
+ * Provides utility methods to check, update, and retrieve task information.
+ */
 public class Task {
-    protected String task_name;
-    protected String[] parsed_task;
-    boolean is_done = false;
+    protected String taskName;
+    protected String[] parsedTask;
+    private boolean isDone = false;
 
+    /**
+     * Creates a new Task with the specified name.
+     * Splits the task name into words and validates its format.
+     * <p>
+     * @param name the name/description of the task
+     * @throws InvalidTaskFormatException if the task name is empty or consists of only one word
+     */
     public Task(String name) {
-        this.task_name = name;
-        this.parsed_task = this.task_name.split(" ");
+        this.taskName = name;
+        this.parsedTask = this.taskName.split(" ");
 
-        if (this.parsed_task.length == 1) {
+        if (this.parsedTask.length == 1) {
             throw new InvalidTaskFormatException("bruh... you didn't type any task");
         }
     }
 
     public boolean getIsDone() {
-        return is_done;
+        return isDone;
     }
 
     public void setDone() {
-        this.is_done = true;
+        this.isDone = true;
     }
 
     public void setNotDone() {
-        this.is_done = false;
+        this.isDone = false;
     }
 
     protected int getIdxOf(String target) {
-        for (int i = 0; i < parsed_task.length; i++) {
-            if (parsed_task[i].equals(target)) {
+        for (int i = 0; i < parsedTask.length; i++) {
+            if (parsedTask[i].equals(target)) {
                 return i;
             }
         }
@@ -38,12 +49,12 @@ public class Task {
     }
 
     public String getTaskName() {
-        return this.task_name;
+        return this.taskName;
     }
 
     @Override
     public String toString() {
-        String check_mark = is_done ? "X" : "   ";
-        return "[" + check_mark + "] " + this.task_name;
+        String checkMark = isDone ? "X" : "   ";
+        return "[" + checkMark + "] " + this.taskName;
     }
 }
