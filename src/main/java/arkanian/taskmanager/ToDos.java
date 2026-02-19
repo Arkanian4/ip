@@ -7,24 +7,19 @@ public class ToDos extends Task {
     public ToDos(String todo) {
         super(todo);
 
-        String task_name = "";
+        String taskName = "";
 
-        for (int i = 1; i < super.parsed_task.length; i++) {
-            String word = super.parsed_task[i];
+        for (int i = 1; i < super.parsedTask.length; i++) {
+            String word = super.parsedTask[i];
 
-            task_name = task_name + word + " ";
+            taskName = taskName + word + " ";
         }
 
-        super.task_name = task_name.trim();
+        super.taskName = taskName.trim();
 
-        if (super.task_name == "") {
+        if (super.taskName.isEmpty()) {
             throw new InvalidTaskFormatException("bruh... I need more deets");
         }
-    }
-
-    @Override
-    public String getTaskName() {
-        return this.task_name;
     }
 
     @Override

@@ -3,38 +3,38 @@ package arkanian.taskmanager;
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> task_list = new ArrayList<>();
+    private final ArrayList<Task> taskList = new ArrayList<>();
 
     public int getTaskCount() {
-        return task_list.size();
+        return taskList.size();
     }
 
     public Task getTask(int idx) {
-        assert idx >= 0 && idx < task_list.size()
+        assert idx >= 0 && idx < taskList.size()
                 : "Invalid index passed to TaskList.getTask()";
-        return task_list.get(idx);
+        return taskList.get(idx);
     }
 
     public void addTask(Task task) {
         assert task != null : "Cannot add null task";
-        task_list.add(task);
+        taskList.add(task);
     }
 
     public void delete(int idx) {
-        assert idx >= 0 && idx < task_list.size()
+        assert idx >= 0 && idx < taskList.size()
                 : "Invalid index passed to TaskList.delete()";
-        task_list.remove(idx);
+        taskList.remove(idx);
     }
 
     public TaskList find(String keyword) {
-        TaskList filtered_list = new TaskList();
+        TaskList filteredList = new TaskList();
 
-        for (Task task : this.task_list) {
+        for (Task task : this.taskList) {
             if (task.getTaskName().contains(keyword)) {
-                filtered_list.addTask(task);
+                filteredList.addTask(task);
             }
         }
-        return filtered_list;
+        return filteredList;
     }
 
     @Override

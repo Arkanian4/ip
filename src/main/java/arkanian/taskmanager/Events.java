@@ -2,53 +2,48 @@ package arkanian.taskmanager;
 
 import java.time.LocalDateTime;
 
-import arkanian.userprompts.DateTimeParser;
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
+import arkanian.userprompts.DateTimeParser;
 
 public class Events extends Task {
-    private String from;
-    private String to;
+    private final String from;
+    private final String to;
 
     public Events(String event) {
         super(event);
 
-        int from_idx = getIdxOf("/from");
-        int to_idx = getIdxOf("/to");
+        int fromIdx = getIdxOf("/from");
+        int toIdx = getIdxOf("/to");
 
-        if (from_idx == -1) {
+        if (fromIdx == -1) {
             throw new InvalidTaskFormatException("bruh... you didn't specify the start time/date");
-        } else if (to_idx == -1) {
+        } else if (toIdx == -1) {
             throw new InvalidTaskFormatException("bruh... you didn't specify the end time/date");
         }
 
-        String task_name = "";
+        String taskName = "";
         String from = "";
         String to = "";
 
-        for (int i = 1; i < super.parsed_task.length; i++) {
-            String word = super.parsed_task[i];
+        for (int i = 1; i < super.parsedTask.length; i++) {
+            String word = super.parsedTask[i];
 
-            if (i < from_idx) {
-                task_name = task_name + word + " ";
-            } else if (from_idx < i && i < to_idx) {
+            if (i < fromIdx) {
+                taskName = taskName + word + " ";
+            } else if (fromIdx < i && i < toIdx) {
                 from = from + word + " ";
-            } else if (to_idx < i) {
+            } else if (toIdx < i) {
                 to = to + word + " ";
             }
         }
 
-        super.task_name = task_name.trim();
+        super.taskName = taskName.trim();
         this.from = from.trim();
         this.to = to.trim();
 
-        if (super.task_name == "" || this.from == "" || this.to == "") {
+        if (super.taskName.isEmpty() || this.from.isEmpty() || this.to.isEmpty()) {
             throw new InvalidTaskFormatException("bruh... I need more deets");
         }
-    }
-
-    @Override
-    public String getTaskName() {
-        return super.task_name;
     }
 
     public LocalDateTime getFrom() {
@@ -56,11 +51,11 @@ public class Events extends Task {
     }
 
     public String getFromString() {
-        String date_time = this.getFrom().toString();
+        String dateTime = this.getFrom().toString();
 
-        return DateTimeParser.getDateString(date_time)
+        return DateTimeParser.getDateString(dateTime)
                 + " "
-                + DateTimeParser.getTimeString(date_time);
+                + DateTimeParser.getTimeString(dateTime);
     }
 
     public LocalDateTime getTo() {
@@ -68,11 +63,11 @@ public class Events extends Task {
     }
 
     public String getToString() {
-        String date_time = this.getTo().toString();
+        String dateTime = this.getTo().toString();
 
-        return DateTimeParser.getDateString(date_time)
+        return DateTimeParser.getDateString(dateTime)
                 + " "
-                + DateTimeParser.getTimeString(date_time);
+                + DateTimeParser.getTimeString(dateTime);
     }
 
     @Override

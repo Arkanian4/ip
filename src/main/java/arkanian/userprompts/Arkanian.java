@@ -5,13 +5,10 @@ import arkanian.memorystorage.Save;
 import arkanian.taskmanager.TaskList;
 
 public class Arkanian {
-    final String BOT_NAME = "Arkanian";
-
-    boolean cont_convo = true;
-
-    private Scanner scanner = new Scanner(System.in);
-    private TaskList task_list = Save.initializeData();
-    private Ui ui = new Ui(BOT_NAME, task_list);
+    private final String BOT_NAME = "Arkanian";
+    private final Scanner scanner = new Scanner(System.in);
+    private final TaskList taskList = Save.initializeData();
+    private final Ui ui = new Ui(BOT_NAME, taskList);
 
     /*
     public void Run() {
