@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+
 /**
  * Controller for the main GUI.
  */
@@ -34,8 +37,25 @@ public class MainWindow extends AnchorPane {
     /** Injects the Arkanian instance */
     public void setArkanian(Arkanian a) {
         arkanian = a;
+        printWelcomeMessage();
     }
 
+    private void printWelcomeMessage() {
+        String asciiArt = """
+                ,──.  ,──.,──.    ,──. \s
+                │  '──'  ││  │    │  | \s
+                │  .──.  ││  │    `──' \s
+                │  │  │  ││  │    .──. \s
+                `──'  `──'`──'    '──' \s
+        """;
+
+        String message = "I'm ARKANIAN :)\n"
+                + "What mischief or tasks are we tackling today?\n";
+
+        TextFlow flow = new TextFlow(new Text(asciiArt + "\n" + message));
+        dialogContainer.getChildren().add(flow);
+        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+    }
     /**
      * Creates two dialog boxes, one echoing user input and the other
      * containing Arkanian's reply and then appends them to

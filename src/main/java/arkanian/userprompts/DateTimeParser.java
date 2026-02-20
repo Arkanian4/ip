@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import arkanian.arkanianexceptions.InvalidParameterException;
+
 /**
  * Converts strings of dates and/or times into LocalDateTime objects.
  * <p>
@@ -13,21 +15,21 @@ import java.time.format.DateTimeParseException;
 public class DateTimeParser {
 
     private static final String[] datePatterns = {
-            "d-MM-yyyy",
-            "d/MM/yyyy",
-            "d MMM yyyy",
-            "d MMMM yyyy",
-            "yyyy-MM-dd",
-            "ddMMyyyy"
+        "d-MM-yyyy",
+        "d/MM/yyyy",
+        "d MMM yyyy",
+        "d MMMM yyyy",
+        "yyyy-MM-dd",
+        "ddMMyyyy"
     };
 
     private static final String[] timePatterns = {
-            "H:mm",
-            "HHmm",
-            "hma",
-            "hm a",
-            "h.ma",
-            "h.m a"
+        "H:mm",
+        "HHmm",
+        "hma",
+        "hm a",
+        "h.ma",
+        "h.m a"
     };
 
     /**
@@ -38,9 +40,17 @@ public class DateTimeParser {
      */
     public static LocalDateTime convert(String input) {
         LocalDateTime dateTime = parseDateTimeWithPatterns(input);
+
         if (dateTime == null) {
             dateTime = parseDateOnly(input);
         }
+
+        if (dateTime == null) {
+            throw new InvalidParameterException(
+                    "Hmm… that date/time format looks funky 🤨 Try something like 2026-03-15 1800!"
+            );
+        }
+
         return dateTime;
     }
 

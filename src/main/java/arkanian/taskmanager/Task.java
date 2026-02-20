@@ -85,7 +85,7 @@ public class Task {
 
     private void validateTaskFormat() {
         if (parsedTask.length == 0) {
-            throw new InvalidTaskFormatException("bruh... you didn't type any task");
+            throw new InvalidTaskFormatException("Oops! You didn’t type any task 😅 Try again, buddy!");
         }
     }
 

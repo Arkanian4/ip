@@ -99,15 +99,15 @@ public class Events extends Task {
 
     private void validateEventIndices(int fromIdx, int toIdx) {
         if (fromIdx == -1) {
-            throw new InvalidTaskFormatException("bruh... you didn't specify the start time/date");
+            throw new InvalidTaskFormatException("Oi! You forgot the start time/date 😅");
         } else if (toIdx == -1) {
-            throw new InvalidTaskFormatException("bruh... you didn't specify the end time/date");
+            throw new InvalidTaskFormatException("Whoa! You also need to tell me the end time/date 😬");
         }
     }
 
     private void validateEventDetails() {
         if (super.taskName.isEmpty() || this.from.isEmpty() || this.to.isEmpty()) {
-            throw new InvalidTaskFormatException("bruh... I need more deets");
+            throw new InvalidTaskFormatException("Hmm… I need more juicy details before I can save this 😏");
         }
     }
 

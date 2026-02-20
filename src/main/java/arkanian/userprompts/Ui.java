@@ -1,5 +1,6 @@
 package arkanian.userprompts;
 
+import arkanian.arkanianexceptions.InvalidParameterException;
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 import arkanian.arkanianexceptions.UnknownInputException;
 import arkanian.memorystorage.Save;
@@ -48,7 +49,7 @@ public class Ui {
     public String processInput(String rawInput) {
         try {
             return wrapMessage(executeCommand(rawInput));
-        } catch (InvalidTaskFormatException | UnknownInputException e) {
+        } catch (InvalidTaskFormatException | UnknownInputException | InvalidParameterException e) {
             return wrapMessage(e.getMessage());
         }
     }
@@ -69,24 +70,25 @@ public class Ui {
         case "event" -> handleAddTask(new Events(rawInput));
         case "deadline" -> handleAddTask(new Deadlines(rawInput));
         case "find" -> handleFind(parsedInput);
-        default -> throw new UnknownInputException("what nonsense r u saying bruh");
+        default -> throw new UnknownInputException("Huh? That command sounds funky 😅");
         };
     }
 
     private String handleBye() {
-        return "Bye! Hope to see you again :)\n";
+        return "Aight, see ya! Don't forget to come back with more tasks 😎\n";
     }
 
     private String handleList() {
-        return taskList.toString();
+        return taskList.getTaskCount() == 0
+                ? "Empty, bruv. Nothing to do yet! 💤\n"
+                : "Here's the lineup of your awesome tasks:\n" + taskList.toString();
     }
 
     private String handleFind(Input parsedInput) {
         String str = taskList.find(parsedInput.getTaskName()).toString();
         return str.isEmpty()
-                ? "No tasks matched your search\n"
-                : "Here are the tasks matching your search:\n"
-                    + str;
+                ? "Hmm... couldn't find anything matching that 🤷‍♂️\n"
+                : "Check these out, boss! Tasks that match your search:\n" + str;
     }
 
     private String handleMark(Input parsedInput, boolean markAsDone)
@@ -98,11 +100,11 @@ public class Ui {
         if (markAsDone) {
             task.setDone();
             Save.saveData(taskList);
-            return "Nice! I've marked this task as done:\n" + task + "\n";
+            return "Boom! Task completed:\n" + task + "\nYou're crushing it 💪\n";
         } else {
             task.setNotDone();
             Save.saveData(taskList);
-            return "OK, I've marked this task as not done yet:\n" + task + "\n";
+            return "No worries, task set back to pending:\n" + task + "\nTake your time 😌\n";
         }
     }
 
@@ -114,22 +116,22 @@ public class Ui {
         taskList.delete(idx);
         Save.saveData(taskList);
 
-        return "Noted. I've removed this task:\n"
+        return "Gotcha! Removed this task:\n"
                 + task
                 + "\nNow you have "
                 + taskList.getTaskCount()
-                + " tasks in the list.\n";
+                + " tasks left. Keep it up! 🚀\n";
     }
 
     private String handleAddTask(Task task) {
         taskList.addTask(task);
         Save.saveData(taskList);
 
-        return "Got it. I've added this task:\n"
+        return "Sweet! Added this gem:\n"
                 + task
-                + "\nNow you have "
+                + "\nYou're juggling "
                 + taskList.getTaskCount()
-                + " tasks in the list.\n";
+                + " tasks now. Legendary! 🌟\n";
     }
 
     private String wrapMessage(String message) {

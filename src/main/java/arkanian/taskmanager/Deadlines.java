@@ -80,13 +80,13 @@ public class Deadlines extends Task {
 
     private void validateDueDateIndex(int dueDateIdx) {
         if (dueDateIdx == -1) {
-            throw new InvalidTaskFormatException("bruh... you didn't give me a deadline");
+            throw new InvalidTaskFormatException("Whoa! You forgot to give me a deadline 😬");
         }
     }
 
     private void validateDeadlineDetails() {
         if (super.taskName.isEmpty() || this.dueDate.isEmpty()) {
-            throw new InvalidTaskFormatException("bruh... I need more deets");
+            throw new InvalidTaskFormatException("Hmm… I need more juicy details before I can save this 😏");
         }
     }
 

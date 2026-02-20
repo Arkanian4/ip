@@ -30,7 +30,7 @@ public class ToDos extends Task {
         super.taskName = taskName.trim();
 
         if (super.taskName.isEmpty()) {
-            throw new InvalidTaskFormatException("bruh... I need more deets");
+            throw new InvalidTaskFormatException("Oops! You didn’t type any task 😅 Try again, buddy!");
         }
     }
 
