@@ -43,13 +43,14 @@ Display all tasks currently stored in Arkanian.
 > 1. [T][ ] read book
 > 2. [D][X] submit report (by: 2026-03-10)
 > ________________________________________
+<br>
 ### Expected Output (when no tasks exist)
 > ________________________________________
 > Empty, bruv. Nothing to do yet! 💤
 > ________________________________________
 <br>
 
-## Adding a ToDo
+## Add a ToDo
 ### Goal
 
 Add a simple task without any date or time.
@@ -79,18 +80,18 @@ Add a task with a deadline.
 
 `deadline <DESCRIPTION> /by <DATE>`
 
-<DATE> must follow the format supported by the system (e.g. YYYY-MM-DD or YYYY-MM-DD HH:MM).
+DATE must follow the format supported by the system (e.g. YYYY-MM-DD or YYYY-MM-DD HH:MM).
 
 ### Example
 
 `deadline submit assignment /by 2026-03-15`
 
 ### Expected Output
-________________________________________
-Sweet! Added this gem:
-[D][ ] submit assignment (by: 2026-03-15)
-You're juggling 2 tasks now. Legendary! 🌟
-________________________________________
+> ________________________________________
+> Sweet! Added this gem:
+> [D][ ] submit assignment (by: 2026-03-15)
+> You're juggling 2 tasks now. Legendary! 🌟
+> ________________________________________
 <br>
 
 ## Adding an Event
@@ -123,7 +124,7 @@ Mark a task as completed.
 
 `mark <INDEX>`
 
-<INDEX> refers to the task number shown in the list command.
+INDEX refers to the task number shown in the list command.
 
 ### Example
 
