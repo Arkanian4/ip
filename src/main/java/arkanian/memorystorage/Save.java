@@ -26,7 +26,7 @@ public class Save {
 
         for (int i = 0; i < data.getTaskCount(); i++) {
             Task task = data.getTask(i);
-            String taskName = task.getTaskName();
+            String taskName = task.getTaskString();
             String isDone = task.getIsDone() ? "1" : "0";
 
             if (task instanceof ToDos) {

@@ -33,7 +33,7 @@ public class Deadlines extends Task {
             throw new InvalidTaskFormatException("bruh... you didn't give me a deadline");
         }
 
-        for (int i = 1; i < super.parsedTask.length; i++) {
+        for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
             String word = super.parsedTask[i];
 
             if (i < dueDateIdx) {
@@ -74,6 +74,8 @@ public class Deadlines extends Task {
                 + super.toString()
                 + " (by: "
                 + this.getDeadlineString()
-                + ")";
+                + ")"
+                + "\n"
+                + super.getTags();
     }
 }

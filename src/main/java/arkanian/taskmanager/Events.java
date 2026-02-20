@@ -44,7 +44,7 @@ public class Events extends Task {
         String from = "";
         String to = "";
 
-        for (int i = 1; i < super.parsedTask.length; i++) {
+        for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
             String word = super.parsedTask[i];
 
             if (i < fromIdx) {
@@ -97,7 +97,9 @@ public class Events extends Task {
                 + this.getFromString()
                 + " to: "
                 + this.getToString()
-                + ")";
+                + ")"
+                + "\n"
+                + super.getTags();
     }
 
 }

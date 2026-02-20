@@ -7,6 +7,7 @@ import arkanian.arkanianexceptions.InvalidTaskFormatException;
  * Provides utility methods to check, update, and retrieve task information.
  */
 public class Task {
+    protected String inputString;
     protected String taskName;
     protected String[] parsedTask;
     private boolean isDone = false;
@@ -19,6 +20,7 @@ public class Task {
      * @throws InvalidTaskFormatException if the task name is empty or consists of only one word
      */
     public Task(String name) {
+        this.inputString = name;
         this.taskName = name;
         this.parsedTask = this.taskName.split(" ");
 
@@ -39,8 +41,37 @@ public class Task {
         this.isDone = false;
     }
 
-    protected int getIdxOf(String target) {
+    private int getIdxOfTags() {
         for (int i = 0; i < parsedTask.length; i++) {
+            if (parsedTask[i].equals("/tag")) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private String getTagsString() {
+        String[] temp = this.inputString.split("/tag ");
+        if (temp.length == 2) {
+            return temp[1];
+        }
+        return "";
+    }
+
+    protected TagList getTags() {
+        return new TagList(this.getTagsString().split(" "));
+    }
+
+    protected int getIdxOfSearchLimit() {
+        return this.getIdxOfTags() == -1
+                ? this.parsedTask.length
+                : this.getIdxOfTags();
+    }
+
+    protected int getIdxOf(String target) {
+        int limitOfSearch = getIdxOfSearchLimit();
+
+        for (int i = 0; i < limitOfSearch; i++) {
             if (parsedTask[i].equals(target)) {
                 return i;
             }
@@ -49,12 +80,18 @@ public class Task {
     }
 
     public String getTaskName() {
-        return this.taskName;
+        String[] temp = this.taskName.split(" /tag");
+        return temp[0];
+    }
+
+    public String getTaskString() {
+        return taskName;
     }
 
     @Override
     public String toString() {
         String checkMark = isDone ? "X" : "   ";
-        return "[" + checkMark + "] " + this.taskName;
+        return "[" + checkMark + "] "
+                + this.getTaskName();
     }
 }

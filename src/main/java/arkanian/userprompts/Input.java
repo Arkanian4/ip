@@ -1,5 +1,7 @@
 package arkanian.userprompts;
 
+import arkanian.taskmanager.Task;
+
 /**
  * Filters a raw String input from the user to
  * extract relevant fields
@@ -20,7 +22,7 @@ public class Input {
     }
 
     public String getTaskName() {
-        return splitInput[1];
+        return new Task(splitInput[1]).getTaskName();
     }
 
     public int getIdx() {
