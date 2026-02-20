@@ -1,5 +1,9 @@
 package arkanian.taskmanager;
 
+/**
+ * Represents a single tag associated with a task.
+ * A tag is a short label that can be used for categorization or filtering.
+ */
 public class Tag {
     private final String tag;
 
@@ -9,7 +13,7 @@ public class Tag {
 
     @Override
     public String toString() {
-        return this.tag == ""
+        return this.tag.isEmpty()
                 ? ""
                 : "[#" + this.tag + "] ";
     }

@@ -34,35 +34,15 @@ public class Events extends Task {
         int fromIdx = getIdxOf("/from");
         int toIdx = getIdxOf("/to");
 
-        if (fromIdx == -1) {
-            throw new InvalidTaskFormatException("bruh... you didn't specify the start time/date");
-        } else if (toIdx == -1) {
-            throw new InvalidTaskFormatException("bruh... you didn't specify the end time/date");
-        }
+        validateEventIndices(fromIdx, toIdx);
 
-        String taskName = "";
-        String from = "";
-        String to = "";
+        String[] parsedDetails = parseEventDetails(fromIdx, toIdx);
 
-        for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
-            String word = super.parsedTask[i];
+        super.taskName = parsedDetails[0];
+        this.from = parsedDetails[1];
+        this.to = parsedDetails[2];
 
-            if (i < fromIdx) {
-                taskName = taskName + word + " ";
-            } else if (fromIdx < i && i < toIdx) {
-                from = from + word + " ";
-            } else if (toIdx < i) {
-                to = to + word + " ";
-            }
-        }
-
-        super.taskName = taskName.trim();
-        this.from = from.trim();
-        this.to = to.trim();
-
-        if (super.taskName.isEmpty() || this.from.isEmpty() || this.to.isEmpty()) {
-            throw new InvalidTaskFormatException("bruh... I need more deets");
-        }
+        validateEventDetails();
     }
 
     public LocalDateTime getFrom() {
@@ -70,11 +50,7 @@ public class Events extends Task {
     }
 
     public String getFromString() {
-        String dateTime = this.getFrom().toString();
-
-        return DateTimeParser.getDateString(dateTime)
-                + " "
-                + DateTimeParser.getTimeString(dateTime);
+        return formatDateTime(this.getFrom());
     }
 
     public LocalDateTime getTo() {
@@ -82,11 +58,7 @@ public class Events extends Task {
     }
 
     public String getToString() {
-        String dateTime = this.getTo().toString();
-
-        return DateTimeParser.getDateString(dateTime)
-                + " "
-                + DateTimeParser.getTimeString(dateTime);
+        return formatDateTime(this.getTo());
     }
 
     @Override
@@ -102,4 +74,47 @@ public class Events extends Task {
                 + super.getTags();
     }
 
+    private String[] parseEventDetails(int fromIdx, int toIdx) {
+        StringBuilder taskNameBuilder = new StringBuilder();
+        StringBuilder fromBuilder = new StringBuilder();
+        StringBuilder toBuilder = new StringBuilder();
+
+        for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
+            String word = super.parsedTask[i];
+            if (i < fromIdx) {
+                taskNameBuilder.append(word).append(" ");
+            } else if (i > fromIdx && i < toIdx) {
+                fromBuilder.append(word).append(" ");
+            } else if (i > toIdx) {
+                toBuilder.append(word).append(" ");
+            }
+        }
+
+        return new String[]{
+                taskNameBuilder.toString().trim(),
+                fromBuilder.toString().trim(),
+                toBuilder.toString().trim()
+        };
+    }
+
+    private void validateEventIndices(int fromIdx, int toIdx) {
+        if (fromIdx == -1) {
+            throw new InvalidTaskFormatException("bruh... you didn't specify the start time/date");
+        } else if (toIdx == -1) {
+            throw new InvalidTaskFormatException("bruh... you didn't specify the end time/date");
+        }
+    }
+
+    private void validateEventDetails() {
+        if (super.taskName.isEmpty() || this.from.isEmpty() || this.to.isEmpty()) {
+            throw new InvalidTaskFormatException("bruh... I need more deets");
+        }
+    }
+
+    private String formatDateTime(LocalDateTime dt) {
+        String dateTime = dt.toString();
+        return DateTimeParser.getDateString(dateTime)
+                + " "
+                + DateTimeParser.getTimeString(dateTime);
+    }
 }

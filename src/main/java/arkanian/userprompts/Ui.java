@@ -46,113 +46,93 @@ public class Ui {
      * @return a formatted message indicating the result of the command
      */
     public String processInput(String rawInput) {
+        try {
+            return wrapMessage(executeCommand(rawInput));
+        } catch (InvalidTaskFormatException | UnknownInputException e) {
+            return wrapMessage(e.getMessage());
+        }
+    }
+
+    private String executeCommand(String rawInput)
+            throws InvalidTaskFormatException, UnknownInputException {
 
         Input parsedInput = new Input(rawInput);
         String instr = parsedInput.getInstr();
 
-        int idx;
-        Task task;
-        boolean isBye = false;
+        return switch (instr) {
+        case "bye" -> handleBye();
+        case "list" -> handleList();
+        case "mark" -> handleMark(parsedInput, true);
+        case "unmark" -> handleMark(parsedInput, false);
+        case "delete" -> handleDelete(parsedInput);
+        case "todo" -> handleAddTask(new ToDos(rawInput));
+        case "event" -> handleAddTask(new Events(rawInput));
+        case "deadline" -> handleAddTask(new Deadlines(rawInput));
+        case "find" -> handleFind(parsedInput);
+        default -> throw new UnknownInputException("what nonsense r u saying bruh");
+        };
+    }
 
-        String message;
-        try {
-            switch (instr) {
-            case "bye":
-                message = "Bye! Hope to see you again :)\n";
-                isBye = true;
-                break;
+    private String handleBye() {
+        return "Bye! Hope to see you again :)\n";
+    }
 
-            case "list":
-                message = taskList.toString();
-                break;
+    private String handleList() {
+        return taskList.toString();
+    }
 
-            case "mark":
-                idx = parsedInput.getIdx() - 1;
-                task = taskList.getTask(idx);
-                task.setDone();
-                message = "Nice! I've marked this task as done:\n"
-                        + task
-                        + "\n";
-                Save.saveData(taskList);
-                break;
+    private String handleFind(Input parsedInput) {
+        String str = taskList.find(parsedInput.getTaskName()).toString();
+        return str.isEmpty()
+                ? "No tasks matched your search\n"
+                : "Here are the tasks matching your search:\n"
+                    + str;
+    }
 
-            case "unmark":
-                idx = parsedInput.getIdx() - 1;
-                task = taskList.getTask(idx);
-                task.setNotDone();
-                message = "OK, I've marked this task as not done yet:\n"
-                        + task
-                        + "\n";
-                Save.saveData(taskList);
-                break;
+    private String handleMark(Input parsedInput, boolean markAsDone)
+            throws InvalidTaskFormatException {
 
-            case "delete":
-                idx = parsedInput.getIdx() - 1;
-                task = taskList.getTask(idx);
-                taskList.delete(idx);
-                message = "Noted. I've removed this task:\n"
-                        + task
-                        + "\nNow you have "
-                        + taskList.getTaskCount()
-                        + " tasks in the list."
-                        + "\n";
-                Save.saveData(taskList);
-                break;
+        int idx = parsedInput.getIdx() - 1;
+        Task task = taskList.getTask(idx);
 
-            case "todo":
-                task = new ToDos(rawInput);
-                taskList.addTask(task);
-                message = "Got it. I've added this task:\n"
-                        + task
-                        + "\nNow you have "
-                        + taskList.getTaskCount()
-                        + " tasks in the list."
-                        + "\n";
-                Save.saveData(taskList);
-                break;
-
-            case "event":
-                task = new Events(rawInput);
-                taskList.addTask(task);
-                message = "Got it. I've added this task:\n"
-                        + task
-                        + "\nNow you have "
-                        + taskList.getTaskCount()
-                        + " tasks in the list."
-                        + "\n";
-                Save.saveData(taskList);
-                break;
-
-            case "deadline":
-                task = new Deadlines(rawInput);
-                taskList.addTask(task);
-                message = "Got it. I've added this task:\n"
-                        + task
-                        + "\nNow you have "
-                        + taskList.getTaskCount()
-                        + " tasks in the list."
-                        + "\n";
-                Save.saveData(taskList);
-                break;
-
-            case "find":
-                message = "Here are the tasks matching your search:\n"
-                        + this.taskList.find(parsedInput.getTaskName()).toString();
-                break;
-
-
-            default:
-                throw new UnknownInputException("what nonsense r u saying bruh");
-            }
-        } catch (InvalidTaskFormatException | UnknownInputException e) {
-            message = e.getMessage();
+        if (markAsDone) {
+            task.setDone();
+            Save.saveData(taskList);
+            return "Nice! I've marked this task as done:\n" + task + "\n";
+        } else {
+            task.setNotDone();
+            Save.saveData(taskList);
+            return "OK, I've marked this task as not done yet:\n" + task + "\n";
         }
+    }
 
-        message = horizontalLine
-                + message
-                + horizontalLine;
+    private String handleDelete(Input parsedInput)
+            throws InvalidTaskFormatException {
 
-        return message;
+        int idx = parsedInput.getIdx() - 1;
+        Task task = taskList.getTask(idx);
+        taskList.delete(idx);
+        Save.saveData(taskList);
 
+        return "Noted. I've removed this task:\n"
+                + task
+                + "\nNow you have "
+                + taskList.getTaskCount()
+                + " tasks in the list.\n";
+    }
+
+    private String handleAddTask(Task task) {
+        taskList.addTask(task);
+        Save.saveData(taskList);
+
+        return "Got it. I've added this task:\n"
+                + task
+                + "\nNow you have "
+                + taskList.getTaskCount()
+                + " tasks in the list.\n";
+    }
+
+    private String wrapMessage(String message) {
+        return horizontalLine + message + horizontalLine;
     }
 }
