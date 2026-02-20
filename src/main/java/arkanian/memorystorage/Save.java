@@ -21,49 +21,16 @@ import arkanian.taskmanager.ToDos;
  */
 public class Save {
 
+    private static final String FILE_PATH = "memory/saved.txt";
+    private static final String DELIMITER = " \\| ";
+
     private static void writeMemory(TaskList data, FileWriter fwrite) throws IOException {
-        String taskString = "";
-
         for (int i = 0; i < data.getTaskCount(); i++) {
-            Task task = data.getTask(i);
-            String taskName = task.getTaskString();
-            String isDone = task.getIsDone() ? "1" : "0";
-
-            if (task instanceof ToDos) {
-                taskString = "T | "
-                        + isDone
-                        + " | "
-                        + taskName
-                        + "\n";
-            } else if (task instanceof Deadlines) {
-                String deadline = ((Deadlines) task).getDeadlineString();
-
-                taskString = "D | "
-                        + isDone
-                        + " | "
-                        + taskName
-                        + " | "
-                        + deadline
-                        + "\n";
-            } else if (task instanceof Events) {
-                String from = ((Events) task).getFromString();
-                String to = ((Events) task).getToString();
-
-                taskString = "E | "
-                        + isDone
-                        + " | "
-                        + taskName
-                        + " | "
-                        + from
-                        + " | "
-                        + to
-                        + "\n";
-            }
-
-            fwrite.write(taskString);
+            fwrite.write(formatTask(data.getTask(i)));
         }
         fwrite.close();
     }
+
 
     /**
      * Saves the provided TaskList to persistent storage.
@@ -72,74 +39,27 @@ public class Save {
      */
     public static void saveData(TaskList data) {
         try {
-            FileWriter fwrite = new FileWriter("memory/saved.txt");
+            FileWriter fwrite = new FileWriter(FILE_PATH);
             writeMemory(data, fwrite);
         } catch (IOException e) {
             System.out.println("Unable to save data: " + e.getMessage());
         }
     }
 
+
     private static TaskList readMemory() throws FileNotFoundException {
 
-        File fread = new File("memory/saved.txt");
-        java.util.Scanner s = new Scanner(fread);
         TaskList taskList = new TaskList();
 
+        Scanner s = new Scanner(new File(FILE_PATH));
         while (s.hasNext()) {
-            String[] taskStringArray = s.nextLine().split(" \\| ");
-
-            String taskType = taskStringArray[0];
-            String isDone = taskStringArray[1];
-            String taskName = taskStringArray[2];
-            String taskString;
-            Task task = null;
-
-            switch (taskType) {
-            case "T":
-                taskString = "todo "
-                        + taskName;
-                task = new ToDos(taskString);
-                break;
-
-            case "D":
-                String deadline = taskStringArray[3];
-
-                taskString = "deadline "
-                        + taskName
-                        + " /by "
-                        + deadline;
-
-                task = new Deadlines(taskString);
-                break;
-
-            case "E":
-                String from = taskStringArray[3];
-                String to = taskStringArray[4];
-
-                taskString = "event "
-                        + taskName
-                        + " /from "
-                        + from
-                        + " /to "
-                        + to;
-                task = new Events(taskString);
-                break;
-
-            default:
-                // throw new IllegalArgumentException("Unknown task type: " + taskType);
-            }
-
-            if (isDone.equals("1")) {
-                assert task != null : "Attempted to call setDone() on a null Task";
-                task.setDone();
-            }
-
-            taskList.addTask(task);
-
+            taskList.addTask(parseLine(s.nextLine()));
         }
+        s.close();
 
         return taskList;
     }
+
 
     /**
      * Initializes the application's persistent storage.
@@ -152,12 +72,26 @@ public class Save {
      */
     public static TaskList initializeData() {
 
+        ensureFolderExists();
+        ensureFileExists();
+
+        try {
+            return readMemory();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to locate memory: " + e.getMessage());
+            return new TaskList();
+        }
+    }
+
+    private static void ensureFolderExists() {
         File folder = new File("memory");
         if (!folder.exists()) {
             folder.mkdirs();
         }
+    }
 
-        File file = new File(folder, "saved.txt");
+    private static void ensureFileExists() {
+        File file = new File(FILE_PATH);
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -165,16 +99,73 @@ public class Save {
                 System.out.println("Unable to create memory file");
             }
         }
-
-        TaskList taskList = new TaskList();
-
-        try {
-            taskList = readMemory();
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to locate memory: " + e.getMessage());
-        }
-
-        return taskList;
     }
 
+    private static String formatTask(Task task) {
+
+        String isDone = task.getIsDone() ? "1" : "0";
+        String taskName = task.getTaskString();
+
+        if (task instanceof ToDos) {
+            return "T | " + isDone + " | " + taskName + "\n";
+        }
+
+        if (task instanceof Deadlines) {
+            return "D | " + isDone + " | " + taskName
+                    + " | " + ((Deadlines) task).getDeadlineString() + "\n";
+        }
+
+        if (task instanceof Events) {
+            return "E | " + isDone + " | " + taskName
+                    + " | " + ((Events) task).getFromString()
+                    + " | " + ((Events) task).getToString() + "\n";
+        }
+
+        return "";
+    }
+
+    private static Task parseLine(String line) {
+
+        String[] tokens = line.split(DELIMITER);
+
+        Task task = createTask(tokens);
+        restoreStatus(task, tokens[1]);
+
+        return task;
+    }
+
+    private static Task createTask(String[] tokens) {
+
+        String type = tokens[0];
+        String name = tokens[2];
+
+        switch (type) {
+        case "T":
+            return new ToDos("todo " + name);
+
+        case "D":
+            return new Deadlines("deadline "
+                    + name
+                    + " /by "
+                    + tokens[3]);
+
+        case "E":
+            return new Events("event "
+                    + name
+                    + " /from "
+                    + tokens[3]
+                    + " /to "
+                    + tokens[4]);
+
+        default:
+            return null;
+        }
+    }
+
+    private static void restoreStatus(Task task, String isDone) {
+        if ("1".equals(isDone)) {
+            assert task != null : "Attempted to call setDone() on a null Task";
+            task.setDone();
+        }
+    }
 }
