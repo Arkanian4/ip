@@ -104,21 +104,25 @@ public class Save {
     private static String formatTask(Task task) {
 
         String isDone = task.getIsDone() ? "1" : "0";
-        String taskName = task.getTaskString();
+        String descriptionWithTags = task.getInputString();
 
         if (task instanceof ToDos) {
-            return "T | " + isDone + " | " + taskName + "\n";
+            return "T | " + isDone + " | " + descriptionWithTags + "\n";
         }
 
         if (task instanceof Deadlines) {
-            return "D | " + isDone + " | " + taskName
-                    + " | " + ((Deadlines) task).getDeadlineString() + "\n";
+            return "D | " + isDone + " | "
+                    + descriptionWithTags
+                    + " | " + ((Deadlines) task).getDeadlineString()
+                    + "\n";
         }
 
         if (task instanceof Events) {
-            return "E | " + isDone + " | " + taskName
+            return "E | " + isDone + " | "
+                    + descriptionWithTags
                     + " | " + ((Events) task).getFromString()
-                    + " | " + ((Events) task).getToString() + "\n";
+                    + " | " + ((Events) task).getToString()
+                    + "\n";
         }
 
         return "";
@@ -137,25 +141,17 @@ public class Save {
     private static Task createTask(String[] tokens) {
 
         String type = tokens[0];
-        String name = tokens[2];
+        String savedInput = tokens[2];
 
         switch (type) {
         case "T":
-            return new ToDos("todo " + name);
+            return new ToDos(savedInput);
 
         case "D":
-            return new Deadlines("deadline "
-                    + name
-                    + " /by "
-                    + tokens[3]);
+            return new Deadlines(savedInput);
 
         case "E":
-            return new Events("event "
-                    + name
-                    + " /from "
-                    + tokens[3]
-                    + " /to "
-                    + tokens[4]);
+            return new Events(savedInput);
 
         default:
             return null;

@@ -84,8 +84,8 @@ public class Task {
         return temp[0];
     }
 
-    public String getTaskString() {
-        return taskName;
+    public String getInputString() {
+        return inputString;
     }
 
     @Override
