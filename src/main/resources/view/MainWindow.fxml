@@ -26,7 +26,8 @@
                 onAction="#handleUserInput"
                 prefHeight="41.0"
                 prefWidth="76.0"
-                text="Send" />
+                text="Send"
+                style="-fx-background-color: teal; -fx-text-fill: white;"/>
         <ScrollPane fx:id="scrollPane"
                     hbarPolicy="NEVER"
                     hvalue="1.0"
