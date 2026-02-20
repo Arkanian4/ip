@@ -24,9 +24,7 @@ public class Task {
         this.taskName = name;
         this.parsedTask = this.taskName.split(" ");
 
-        if (this.parsedTask.length == 1) {
-            throw new InvalidTaskFormatException("bruh... you didn't type any task");
-        }
+        validateTaskFormat();
     }
 
     public boolean getIsDone() {
@@ -41,6 +39,18 @@ public class Task {
         this.isDone = false;
     }
 
+    public String getTaskName() {
+        return removeTagsFromName();
+    }
+
+    public String getInputString() {
+        return inputString;
+    }
+
+    protected TagList getTags() {
+        return new TagList(parseTags());
+    }
+
     private int getIdxOfTags() {
         for (int i = 0; i < parsedTask.length; i++) {
             if (parsedTask[i].equals("/tag")) {
@@ -50,28 +60,22 @@ public class Task {
         return -1;
     }
 
-    private String getTagsString() {
-        String[] temp = this.inputString.split("/tag ");
-        if (temp.length == 2) {
-            return temp[1];
+    private String[] parseTags() {
+        String[] parts = inputString.split("/tag ");
+        if (parts.length == 2) {
+            return parts[1].split(" ");
         }
-        return "";
-    }
-
-    protected TagList getTags() {
-        return new TagList(this.getTagsString().split(" "));
+        return new String[0];
     }
 
     protected int getIdxOfSearchLimit() {
-        return this.getIdxOfTags() == -1
-                ? this.parsedTask.length
-                : this.getIdxOfTags();
+        int tagIdx = getIdxOfTags();
+        return tagIdx == -1 ? parsedTask.length : tagIdx;
     }
 
     protected int getIdxOf(String target) {
-        int limitOfSearch = getIdxOfSearchLimit();
-
-        for (int i = 0; i < limitOfSearch; i++) {
+        int limit = getIdxOfSearchLimit();
+        for (int i = 0; i < limit; i++) {
             if (parsedTask[i].equals(target)) {
                 return i;
             }
@@ -79,19 +83,20 @@ public class Task {
         return -1;
     }
 
-    public String getTaskName() {
-        String[] temp = this.taskName.split(" /tag");
-        return temp[0];
+    private void validateTaskFormat() {
+        if (parsedTask.length == 1) {
+            throw new InvalidTaskFormatException("bruh... you didn't type any task");
+        }
     }
 
-    public String getInputString() {
-        return inputString;
+    private String removeTagsFromName() {
+        String[] parts = taskName.split(" /tag");
+        return parts[0];
     }
 
     @Override
     public String toString() {
         String checkMark = isDone ? "X" : "   ";
-        return "[" + checkMark + "] "
-                + this.getTaskName();
+        return "[" + checkMark + "] " + getTaskName();
     }
 }
