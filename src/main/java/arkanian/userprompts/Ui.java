@@ -82,8 +82,11 @@ public class Ui {
     }
 
     private String handleFind(Input parsedInput) {
-        return "Here are the tasks matching your search:\n"
-                + taskList.find(parsedInput.getTaskName()).toString();
+        String str = taskList.find(parsedInput.getTaskName()).toString();
+        return str.isEmpty()
+                ? "No tasks matched your search\n"
+                : "Here are the tasks matching your search:\n"
+                    + str;
     }
 
     private String handleMark(Input parsedInput, boolean markAsDone)
