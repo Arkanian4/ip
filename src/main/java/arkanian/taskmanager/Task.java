@@ -40,7 +40,7 @@ public class Task {
     }
 
     public String getTaskName() {
-        return removeTagsFromName();
+        return removeExcessFromName();
     }
 
     public String getInputString() {
@@ -84,13 +84,13 @@ public class Task {
     }
 
     private void validateTaskFormat() {
-        if (parsedTask.length == 1) {
+        if (parsedTask.length == 0) {
             throw new InvalidTaskFormatException("bruh... you didn't type any task");
         }
     }
 
-    private String removeTagsFromName() {
-        String[] parts = taskName.split(" /tag");
+    private String removeExcessFromName() {
+        String[] parts = taskName.split(" /");
         return parts[0];
     }
 
