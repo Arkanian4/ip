@@ -1,13 +1,11 @@
 package arkanian.userprompts;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import arkanian.taskmanager.Deadlines;
 import arkanian.taskmanager.TaskList;
 import arkanian.taskmanager.ToDos;
 
@@ -25,7 +23,7 @@ public class UiTest {
     @Test
     void processInput_byeInput_returnsByeMessage() {
         String expected = "________________________________________\n"
-                + "Bye! Hope to see you again :)\n"
+                + "Aight, see ya! Don't forget to come back with more tasks 😎\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("bye"));
     }
@@ -33,7 +31,7 @@ public class UiTest {
     @Test
     void processInput_unknownInput_returnsErrorMessage() {
         String expected = "________________________________________\n"
-                + "what nonsense r u saying bruh\n"
+                + "Huh? That command sounds funky 😅\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("wat"));
     }
@@ -44,7 +42,7 @@ public class UiTest {
         String response = ui.processInput(input);
 
         assertEquals(1, taskList.getTaskCount());
-        assertTrue(response.contains("Got it. I've added this task:"));
+        assertTrue(response.contains("Sweet! Added this gem:"));
         assertTrue(response.contains("buy milk"));
     }
 
@@ -70,15 +68,15 @@ public class UiTest {
     }
 
     @Test
-    void processInput_findTask_noMatches_returnsNoMatchMessage() {
+    void processInput_findTaskNoMatches_returnsNoMatchMessage() {
         taskList.addTask(new ToDos("read book"));
         String response = ui.processInput("find flight");
-        assertTrue(response.contains("No tasks matched your search"));
+        assertTrue(response.contains("Hmm... couldn't find anything matching that 🤷‍♂️"));
     }
 
     @Test
     void processInput_invalidTaskFormat_returnsErrorMessage() {
         String response = ui.processInput("todo "); // empty description
-        assertTrue(response.contains("bruh... I need more deets"));
+        assertTrue(response.contains("Oops! You didn’t type any task 😅 Try again, buddy!"));
     }
 }

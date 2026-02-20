@@ -42,12 +42,12 @@ public class MainWindow extends AnchorPane {
 
     private void printWelcomeMessage() {
         String asciiArt = """
-                ,──.  ,──.,──.    ,──. \s
-                │  '──'  ││  │    │  | \s
-                │  .──.  ││  │    `──' \s
-                │  │  │  ││  │    .──. \s
-                `──'  `──'`──'    '──' \s
-        """;
+                    ,──.  ,──.,──.    ,──. \s
+                    │  '──'  ││  │    │  | \s
+                    │  .──.  ││  │    `──' \s
+                    │  │  │  ││  │    .──. \s
+                    `──'  `──'`──'    '──' \s
+            """;
 
         String message = "I'm ARKANIAN :)\n"
                 + "What mischief or tasks are we tackling today?\n";
@@ -56,6 +56,7 @@ public class MainWindow extends AnchorPane {
         dialogContainer.getChildren().add(flow);
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
+
     /**
      * Creates two dialog boxes, one echoing user input and the other
      * containing Arkanian's reply and then appends them to
