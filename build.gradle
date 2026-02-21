@@ -50,7 +50,7 @@ test {
 }
 
 application {
-    mainClass.set("arkanian.gui.Main")
+    mainClass.set("arkanian.gui.Launcher")
 }
 
 shadowJar {
