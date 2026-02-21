@@ -46,6 +46,7 @@ Here's the lineup of your awesome tasks:
 ________________________________________
 ```
 <br>
+
 ### Expected Output (when no tasks exist)
 
 ```
@@ -224,6 +225,38 @@ ________________________________________
 Hmm... couldn't find anything matching that 🤷‍♂️
 ________________________________________
 ```
+
+<br>
+
+## Add Tags to a Task
+### Goal
+
+Attach one or more tags to a task to help categorize and filter them later.
+
+### Format
+
+`tag INDEX /tag TAG1 TAG2 ... TAGN`
+
+INDEX refers to the task number in the list.
+
+TAG1...TAGN are the tags you want to assign to the task. Tags are optional but recommended for organization.
+
+### Example
+
+`todo finish homework /tag school urgent`
+
+Expected Output
+```
+[T][ ] finish homework
+tags: [#school] [#urgent]
+```
+
+### Notes
+
+* Multiple tags can be added at once, separated by spaces.
+
+* Tags are saved automatically, along with tasks.
+
 <br>
 
 ## Exit Arkanian
@@ -241,6 +274,7 @@ ________________________________________
 Aight, see ya! Don't forget to come back with more tasks 😎
 ________________________________________
 ```
+
 <br>
 
 ## Error Handling
