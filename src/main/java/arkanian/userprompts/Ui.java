@@ -55,7 +55,7 @@ public class Ui {
     }
 
     private String executeCommand(String rawInput)
-            throws InvalidTaskFormatException, UnknownInputException {
+            throws InvalidTaskFormatException, UnknownInputException, InvalidParameterException {
 
         Input parsedInput = new Input(rawInput);
         String instr = parsedInput.getInstr();
@@ -70,24 +70,24 @@ public class Ui {
         case "event" -> handleAddTask(new Events(rawInput));
         case "deadline" -> handleAddTask(new Deadlines(rawInput));
         case "find" -> handleFind(parsedInput);
-        default -> throw new UnknownInputException("Huh? That command sounds funky 😅");
+        default -> throw new UnknownInputException("Huh? That command sounds funky ^^;");
         };
     }
 
     private String handleBye() {
-        return "Aight, see ya! Don't forget to come back with more tasks 😎\n";
+        return "Aight, see ya! Don't forget to come back with more tasks B-)\n";
     }
 
     private String handleList() {
         return taskList.getTaskCount() == 0
-                ? "Empty, bruv. Nothing to do yet! 💤\n"
+                ? "Empty, bruv. Nothing to do yet! zzz\n"
                 : "Here's the lineup of your awesome tasks:\n" + taskList.toString();
     }
 
     private String handleFind(Input parsedInput) {
         String str = taskList.find(parsedInput.getTaskName()).toString();
         return str.isEmpty()
-                ? "Hmm... couldn't find anything matching that 🤷‍♂️\n"
+                ? "Hmm... couldn't find anything matching that ¯\\_(ツ)_/¯\n"
                 : "Check these out, boss! Tasks that match your search:\n" + str;
     }
 
@@ -100,11 +100,11 @@ public class Ui {
         if (markAsDone) {
             task.setDone();
             Save.saveData(taskList);
-            return "Boom! Task completed:\n" + task + "\nYou're crushing it 💪\n";
+            return "Boom! Task completed:\n" + task + "\nYou're crushing it ^_^\n";
         } else {
             task.setNotDone();
             Save.saveData(taskList);
-            return "No worries, task set back to pending:\n" + task + "\nTake your time 😌\n";
+            return "No worries, task set back to pending:\n" + task + "\nTake your time -_-\n";
         }
     }
 
@@ -120,7 +120,7 @@ public class Ui {
                 + task
                 + "\nNow you have "
                 + taskList.getTaskCount()
-                + " tasks left. Keep it up! 🚀\n";
+                + " tasks left. Keep it up! >>>\n";
     }
 
     private String handleAddTask(Task task) {
@@ -131,7 +131,7 @@ public class Ui {
                 + task
                 + "\nYou're juggling "
                 + taskList.getTaskCount()
-                + " tasks now. Legendary! 🌟\n";
+                + " tasks now. Legendary! *_*\n";
     }
 
     private String wrapMessage(String message) {

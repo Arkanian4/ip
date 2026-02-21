@@ -1,6 +1,7 @@
 package arkanian.taskmanager;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 import arkanian.userprompts.DateTimeParser;
@@ -12,21 +13,15 @@ import arkanian.userprompts.DateTimeParser;
  * and an end date/time.
  */
 public class Events extends Task {
-    private final String from;
-    private final String to;
+
+    private final LocalDateTime from;
+    private final LocalDateTime to;
 
     /**
-     * Constructs an Event task from a user input string.
-     * <p>
-     * The expected format is:
-     * <pre>
-     * event task description /from start date/time /to end date/time
-     * </pre>
+     * Constructs an Event task from user input.
      *
-     * @param event The full user input string for the event task.
-     * @throws InvalidTaskFormatException If the input format is invalid,
-     *                                    or if the description, start time,
-     *                                    or end time is missing.
+     * Expected format:
+     * event description /from startDateTime /to endDateTime
      */
     public Events(String event) {
         super(event);
@@ -39,26 +34,34 @@ public class Events extends Task {
         String[] parsedDetails = parseEventDetails(fromIdx, toIdx);
 
         super.taskName = parsedDetails[0];
-        this.from = parsedDetails[1];
-        this.to = parsedDetails[2];
 
-        validateEventDetails();
+        if (super.taskName.isEmpty()) {
+            throw new InvalidTaskFormatException(
+                    "Hmm... I need more juicy details before I can save this ^_~");
+        }
+
+        try {
+            this.from = DateTimeParser.convert(parsedDetails[1]);
+            this.to = DateTimeParser.convert(parsedDetails[2]);
+        } catch (Exception e) {
+            throw e; // Let Ui handle the InvalidParameterException
+        }
     }
 
     public LocalDateTime getFrom() {
-        return DateTimeParser.convert(this.from);
-    }
-
-    public String getFromString() {
-        return formatDateTime(this.getFrom());
+        return this.from;
     }
 
     public LocalDateTime getTo() {
-        return DateTimeParser.convert(this.to);
+        return this.to;
+    }
+
+    public String getFromString() {
+        return formatDateTime(this.from);
     }
 
     public String getToString() {
-        return formatDateTime(this.getTo());
+        return formatDateTime(this.to);
     }
 
     @Override
@@ -66,9 +69,9 @@ public class Events extends Task {
         return "[E]"
                 + super.toString()
                 + " (from: "
-                + this.getFromString()
+                + formatDateTime(this.from)
                 + " to: "
-                + this.getToString()
+                + formatDateTime(this.to)
                 + ")"
                 + "\n"
                 + super.getTags();
@@ -81,6 +84,7 @@ public class Events extends Task {
 
         for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
             String word = super.parsedTask[i];
+
             if (i < fromIdx) {
                 taskNameBuilder.append(word).append(" ");
             } else if (i > fromIdx && i < toIdx) {
@@ -99,22 +103,18 @@ public class Events extends Task {
 
     private void validateEventIndices(int fromIdx, int toIdx) {
         if (fromIdx == -1) {
-            throw new InvalidTaskFormatException("Oi! You forgot the start time/date 😅");
-        } else if (toIdx == -1) {
-            throw new InvalidTaskFormatException("Whoa! You also need to tell me the end time/date 😬");
+            throw new InvalidTaskFormatException(
+                    "Oi! You forgot the start time/date ^^;");
         }
-    }
-
-    private void validateEventDetails() {
-        if (super.taskName.isEmpty() || this.from.isEmpty() || this.to.isEmpty()) {
-            throw new InvalidTaskFormatException("Hmm… I need more juicy details before I can save this 😏");
+        if (toIdx == -1) {
+            throw new InvalidTaskFormatException(
+                    "Whoa! You also need to tell me the end time/date *gulp*");
         }
     }
 
     private String formatDateTime(LocalDateTime dt) {
-        String dateTime = dt.toString();
-        return DateTimeParser.getDateString(dateTime)
-                + " "
-                + DateTimeParser.getTimeString(dateTime);
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dt.format(formatter);
     }
 }

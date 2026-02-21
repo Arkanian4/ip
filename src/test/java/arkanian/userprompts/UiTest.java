@@ -23,7 +23,7 @@ public class UiTest {
     @Test
     void processInput_byeInput_returnsByeMessage() {
         String expected = "________________________________________\n"
-                + "Aight, see ya! Don't forget to come back with more tasks 😎\n"
+                + "Aight, see ya! Don't forget to come back with more tasks B-)\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("bye"));
     }
@@ -31,7 +31,7 @@ public class UiTest {
     @Test
     void processInput_unknownInput_returnsErrorMessage() {
         String expected = "________________________________________\n"
-                + "Huh? That command sounds funky 😅\n"
+                + "Huh? That command sounds funky ^^;\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("wat"));
     }
@@ -71,12 +71,12 @@ public class UiTest {
     void processInput_findTaskNoMatches_returnsNoMatchMessage() {
         taskList.addTask(new ToDos("read book"));
         String response = ui.processInput("find flight");
-        assertTrue(response.contains("Hmm... couldn't find anything matching that 🤷‍♂️"));
+        assertTrue(response.contains("Hmm... couldn't find anything matching that ¯\\_(ツ)_/¯"));
     }
 
     @Test
     void processInput_invalidTaskFormat_returnsErrorMessage() {
         String response = ui.processInput("todo "); // empty description
-        assertTrue(response.contains("Oops! You didn’t type any task 😅 Try again, buddy!"));
+        assertTrue(response.contains("Oops! You didn’t type any task ^^; Try again, buddy!"));
     }
 }

@@ -42,11 +42,11 @@ public class MainWindow extends AnchorPane {
 
     private void printWelcomeMessage() {
         String asciiArt = """
-                    ,──.  ,──.,──.    ,──. \s
-                    │  '──'  ││  │    │  | \s
-                    │  .──.  ││  │    `──' \s
-                    │  │  │  ││  │    .──. \s
-                    `──'  `──'`──'    '──' \s
+            ,---.   ,---.,---.    ,---.
+            |    '--'    ||     |    |    |
+            |    .--.    ||     |    '---'
+            |    |   |    ||     |    ,---.
+            `---'   `---'`---'    `---'
             """;
 
         String message = "I'm ARKANIAN :)\n"

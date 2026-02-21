@@ -47,7 +47,7 @@ public class DateTimeParser {
 
         if (dateTime == null) {
             throw new InvalidParameterException(
-                    "Hmm… that date/time format looks funky 🤨 Try something like 2026-03-15 1800!"
+                    "Hmm... that date/time format looks funky -_-? Try something like '2026-03-15 1800'!"
             );
         }
 

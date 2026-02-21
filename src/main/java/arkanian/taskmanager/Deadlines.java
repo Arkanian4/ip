@@ -1,6 +1,7 @@
 package arkanian.taskmanager;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import arkanian.arkanianexceptions.InvalidTaskFormatException;
 import arkanian.userprompts.DateTimeParser;
@@ -11,19 +12,14 @@ import arkanian.userprompts.DateTimeParser;
  * A Deadline task includes a description and a due date/time.
  */
 public class Deadlines extends Task {
-    private final String dueDate;
+
+    private final LocalDateTime dueDate;
 
     /**
-     * Constructs a Deadline task from a user input string.
-     * <p>
-     * The expected format is:
-     * <pre>
-     * deadline task description /by due date
-     * </pre>
+     * Constructs a Deadline task from user input.
      *
-     * @param deadline The full user input string for the deadline task.
-     * @throws InvalidTaskFormatException If the input format is invalid,
-     *                                    or if the description or due date is missing.
+     * Expected format:
+     * deadline description /by dueDateTime
      */
     public Deadlines(String deadline) {
         super(deadline);
@@ -35,17 +31,25 @@ public class Deadlines extends Task {
         String[] parsedDetails = parseDeadlineDetails(dueDateIdx);
 
         super.taskName = parsedDetails[0];
-        this.dueDate = parsedDetails[1];
 
-        validateDeadlineDetails();
+        if (super.taskName.isEmpty()) {
+            throw new InvalidTaskFormatException(
+                    "Hmm... I need more juicy details before I can save this ^_~");
+        }
+
+        try {
+            this.dueDate = DateTimeParser.convert(parsedDetails[1]);
+        } catch (Exception e) {
+            throw e; // Let Ui handle InvalidParameterException
+        }
     }
 
     public LocalDateTime getDeadline() {
-        return DateTimeParser.convert(this.dueDate);
+        return this.dueDate;
     }
 
     public String getDeadlineString() {
-        return formatDateTime(this.getDeadline());
+        return formatDateTime(this.dueDate);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class Deadlines extends Task {
         return "[D]"
                 + super.toString()
                 + " (by: "
-                + this.getDeadlineString()
+                + getDeadlineString()
                 + ")"
                 + "\n"
                 + super.getTags();
@@ -65,6 +69,7 @@ public class Deadlines extends Task {
 
         for (int i = 1; i < super.getIdxOfSearchLimit(); i++) {
             String word = super.parsedTask[i];
+
             if (i < dueDateIdx) {
                 taskNameBuilder.append(word).append(" ");
             } else if (i > dueDateIdx) {
@@ -80,20 +85,14 @@ public class Deadlines extends Task {
 
     private void validateDueDateIndex(int dueDateIdx) {
         if (dueDateIdx == -1) {
-            throw new InvalidTaskFormatException("Whoa! You forgot to give me a deadline 😬");
-        }
-    }
-
-    private void validateDeadlineDetails() {
-        if (super.taskName.isEmpty() || this.dueDate.isEmpty()) {
-            throw new InvalidTaskFormatException("Hmm… I need more juicy details before I can save this 😏");
+            throw new InvalidTaskFormatException(
+                    "Whoa! You forgot to give me a deadline *gulp*");
         }
     }
 
     private String formatDateTime(LocalDateTime dt) {
-        String dateTime = dt.toString();
-        return DateTimeParser.getDateString(dateTime)
-                + " "
-                + DateTimeParser.getTimeString(dateTime);
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dt.format(formatter);
     }
 }
