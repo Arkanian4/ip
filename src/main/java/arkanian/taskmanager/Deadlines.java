@@ -34,7 +34,7 @@ public class Deadlines extends Task {
 
         if (super.taskName.isEmpty()) {
             throw new InvalidTaskFormatException(
-                    "Sniff sniff... I don't smell any deadlines here! T_T Can you give me some details, hooman?\n");
+                    "Sniff sniff... I don't smell any deadlines here! T_T Can you give me some details, hooman?");
         }
 
         try {
@@ -86,7 +86,7 @@ public class Deadlines extends Task {
     private void validateDueDateIndex(int dueDateIdx) {
         if (dueDateIdx == -1) {
             throw new InvalidTaskFormatException(
-                    "Arf! Don't forget when the tail-wagging ends! ^_^ Give me the deadline, buddy!\n");
+                    "Arf! Don't forget when the tail-wagging ends! ^_^ Give me the deadline, buddy!");
         }
     }
 
