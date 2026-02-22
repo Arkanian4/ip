@@ -86,7 +86,14 @@ public class Ui {
     }
 
     private String handleFind(Input parsedInput) {
-        String str = taskList.find(parsedInput.getTaskName()).toString();
+        String str;
+
+        try {
+            str = taskList.find(parsedInput.getTaskName()).toString();
+        } catch (Exception e) {
+            return "grrrr... you need to give me something to sniff out\n";
+        }
+
         return str.isEmpty()
                 ? "Sniff sniff... I can't find any bones that match ¯\\_(ツ)_/¯\n"
                 : "Woof! ^_^ Lookie here, hooman! These bones match your sniff:\n" + str;
@@ -103,13 +110,13 @@ public class Ui {
             Save.saveData(taskList);
             return "Woof woof! You fetched this bone:\n"
                     + task
-                    + "\nTail wag! You did pawsome, hooman! ^_^";
+                    + "\nTail wag! You did pawsome, hooman! ^_^\n";
         } else {
             task.setNotDone();
             Save.saveData(taskList);
             return "Arf! I've put this bone back in the yard:\n"
                     + task
-                    + "\nTake your time, hooman :)";
+                    + "\nTake your time, hooman :)\n";
         }
     }
 
@@ -125,7 +132,7 @@ public class Ui {
                 + task
                 + "\nNow you have "
                 + taskList.getTaskCount()
-                + " bones left to find! Keep wagging! ;w;";
+                + " bones left to find! Keep wagging! ;w;\n";
     }
 
     private String handleAddTask(Task task) {
@@ -136,7 +143,7 @@ public class Ui {
                 + task
                 + "\nYou've got "
                 + taskList.getTaskCount()
-                + " bones to play with now! Tail wags! ;w;";
+                + " bones to play with now! Tail wags! ;w;\n";
     }
 
     private String wrapMessage(String message) {

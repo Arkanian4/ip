@@ -31,7 +31,7 @@ public class ToDos extends Task {
 
         if (super.taskName.isEmpty()) {
             throw new InvalidTaskFormatException("Arf arf! You didn't give me any bones... I mean tasks! ^^;"
-                    + " Try again, hooman!");
+                    + " Try again, hooman!\n");
         }
     }
 

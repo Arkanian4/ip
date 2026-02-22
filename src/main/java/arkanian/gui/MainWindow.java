@@ -53,7 +53,7 @@ public class MainWindow extends AnchorPane {
             """;
 
         String message = "I'm ARKANIAN :)\n"
-                + "What mischief or tasks are we tackling today?\n";
+                + "Wanna play... I mean, manage some tasks with me? ;w;\n";
 
         TextFlow flow = new TextFlow(new Text(asciiArt + "\n" + message));
         dialogContainer.getChildren().add(flow);
