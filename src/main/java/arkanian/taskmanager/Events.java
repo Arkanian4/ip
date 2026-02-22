@@ -37,7 +37,7 @@ public class Events extends Task {
 
         if (super.taskName.isEmpty()) {
             throw new InvalidTaskFormatException(
-                    "Hmm... I need more juicy details before I can save this ^_~");
+                    "Sniff sniff... I can't find any events here! T_T Give me some details, hooman");
         }
 
         try {
@@ -104,11 +104,11 @@ public class Events extends Task {
     private void validateEventIndices(int fromIdx, int toIdx) {
         if (fromIdx == -1) {
             throw new InvalidTaskFormatException(
-                    "Oi! You forgot the start time/date ^^;");
+                    "Arf! You forgot when the fun starts! ^^; Can you tell me the start time, buddy?");
         }
         if (toIdx == -1) {
             throw new InvalidTaskFormatException(
-                    "Whoa! You also need to tell me the end time/date *gulp*");
+                    "Woof woof! Don't leave me hanging... when does the tail wag end?");
         }
     }
 

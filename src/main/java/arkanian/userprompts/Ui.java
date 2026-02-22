@@ -32,9 +32,9 @@ public class Ui {
         this.taskList = taskList;
 
         System.out.println(horizontalLine
-                + "Hello! I'm "
+                + "Woof woof! I'm "
                 + botName
-                + ". \nWhat can I do for you?\n"
+                + "! \nWanna play... I mean, manage some tasks with me? ;w;\n"
                 + horizontalLine);
     }
 
@@ -70,25 +70,26 @@ public class Ui {
         case "event" -> handleAddTask(new Events(rawInput));
         case "deadline" -> handleAddTask(new Deadlines(rawInput));
         case "find" -> handleFind(parsedInput);
-        default -> throw new UnknownInputException("Huh? That command sounds funky ^^;");
+        default -> throw new UnknownInputException("Arf arf! I don't understand that *sniff*... "
+                + ";w; Can you try another command, hooman? ^^;");
         };
     }
 
     private String handleBye() {
-        return "Aight, see ya! Don't forget to come back with more tasks B-)\n";
+        return "Woof woof! Bye bye, hooman! Come back soon with more bones to fetch! ;P\n";
     }
 
     private String handleList() {
         return taskList.getTaskCount() == 0
-                ? "Empty, bruv. Nothing to do yet! zzz\n"
-                : "Here's the lineup of your awesome tasks:\n" + taskList.toString();
+                ? "Sniff sniff... nothing to chase yet! Your task yard is empty! zzz\n"
+                : "Woof! Here's the lineup of your pawsome tasks:\n" + taskList.toString();
     }
 
     private String handleFind(Input parsedInput) {
         String str = taskList.find(parsedInput.getTaskName()).toString();
         return str.isEmpty()
-                ? "Hmm... couldn't find anything matching that ¯\\_(ツ)_/¯\n"
-                : "Check these out, boss! Tasks that match your search:\n" + str;
+                ? "Sniff sniff... I can't find any bones that match ¯\\_(ツ)_/¯\n"
+                : "Woof! ^_^ Lookie here, hooman! These bones match your sniff:\n" + str;
     }
 
     private String handleMark(Input parsedInput, boolean markAsDone)
@@ -100,11 +101,15 @@ public class Ui {
         if (markAsDone) {
             task.setDone();
             Save.saveData(taskList);
-            return "Boom! Task completed:\n" + task + "\nYou're crushing it ^_^\n";
+            return "Woof woof! You fetched this bone:\n"
+                    + task
+                    + "\nTail wag! You did pawsome, hooman! ^_^";
         } else {
             task.setNotDone();
             Save.saveData(taskList);
-            return "No worries, task set back to pending:\n" + task + "\nTake your time -_-\n";
+            return "Arf! I've put this bone back in the yard:\n"
+                    + task
+                    + "\nTake your time, hooman :)";
         }
     }
 
@@ -116,22 +121,22 @@ public class Ui {
         taskList.delete(idx);
         Save.saveData(taskList);
 
-        return "Gotcha! Removed this task:\n"
+        return "Woof! Snatched this bone away:\n"
                 + task
                 + "\nNow you have "
                 + taskList.getTaskCount()
-                + " tasks left. Keep it up! >>>\n";
+                + " bones left to find! Keep wagging! ;w;";
     }
 
     private String handleAddTask(Task task) {
         taskList.addTask(task);
         Save.saveData(taskList);
 
-        return "Sweet! Added this gem:\n"
+        return "Yip yip! Added this bone:\n"
                 + task
-                + "\nYou're juggling "
+                + "\nYou've got "
                 + taskList.getTaskCount()
-                + " tasks now. Legendary! *_*\n";
+                + " bones to play with now! Tail wags! ;w;";
     }
 
     private String wrapMessage(String message) {

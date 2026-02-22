@@ -23,7 +23,7 @@ public class UiTest {
     @Test
     void processInput_byeInput_returnsByeMessage() {
         String expected = "________________________________________\n"
-                + "Aight, see ya! Don't forget to come back with more tasks B-)\n"
+                + "Woof woof! Bye bye, hooman! Come back soon with more bones to fetch! ;P\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("bye"));
     }
@@ -31,7 +31,7 @@ public class UiTest {
     @Test
     void processInput_unknownInput_returnsErrorMessage() {
         String expected = "________________________________________\n"
-                + "Huh? That command sounds funky ^^;\n"
+                + "Arf arf! I don't understand that *sniff*... ;w; Can you try another command, hooman? ^^;\n"
                 + "________________________________________\n";
         assertEquals(expected, ui.processInput("wat"));
     }
@@ -42,7 +42,7 @@ public class UiTest {
         String response = ui.processInput(input);
 
         assertEquals(1, taskList.getTaskCount());
-        assertTrue(response.contains("Sweet! Added this gem:"));
+        assertTrue(response.contains("Yip yip! Added this bone:"));
         assertTrue(response.contains("buy milk"));
     }
 
@@ -69,14 +69,17 @@ public class UiTest {
 
     @Test
     void processInput_findTaskNoMatches_returnsNoMatchMessage() {
-        taskList.addTask(new ToDos("read book"));
+        taskList.addTask(new ToDos("todo read book"));
         String response = ui.processInput("find flight");
-        assertTrue(response.contains("Hmm... couldn't find anything matching that ¯\\_(ツ)_/¯"));
+
+        assertTrue(response.contains("Sniff sniff... I can't find any bones that match ¯\\_(ツ)_/¯\n"));
     }
 
     @Test
     void processInput_invalidTaskFormat_returnsErrorMessage() {
-        String response = ui.processInput("todo "); // empty description
-        assertTrue(response.contains("Oops! You didn’t type any task ^^; Try again, buddy!"));
+        String response = ui.processInput("todo ");
+
+        assertTrue(response.contains("Arf arf! You didn't give me any bones... I mean tasks! ^^; "
+                + "Try again, hooman!\n"));
     }
 }

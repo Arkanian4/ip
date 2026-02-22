@@ -19,18 +19,19 @@ public class ToDos extends Task {
     public ToDos(String todo) {
         super(todo);
 
-        String taskName = "";
+        StringBuilder taskName = new StringBuilder();
 
         for (int i = 1; i < super.parsedTask.length; i++) {
             String word = super.parsedTask[i];
 
-            taskName = taskName + word + " ";
+            taskName.append(word).append(" ");
         }
 
-        super.taskName = taskName.trim();
+        super.taskName = taskName.toString().trim();
 
         if (super.taskName.isEmpty()) {
-            throw new InvalidTaskFormatException("Oops! You didn’t type any task ^^; Try again, buddy!");
+            throw new InvalidTaskFormatException("Arf arf! You didn't give me any bones... I mean tasks! ^^;"
+                    + " Try again, hooman!");
         }
     }
 
