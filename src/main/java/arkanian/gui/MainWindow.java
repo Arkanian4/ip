@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -14,7 +14,7 @@ import javafx.scene.text.TextFlow;
 /**
  * Controller for the main GUI.
  */
-public class MainWindow extends AnchorPane {
+public class MainWindow extends BorderPane {
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -55,9 +55,13 @@ public class MainWindow extends AnchorPane {
         String message = "I'm ARKANIAN :)\n"
                 + "Wanna play... I mean, manage some tasks with me? ;w;\n";
 
-        TextFlow flow = new TextFlow(new Text(asciiArt + "\n" + message));
+        Text text = new Text(asciiArt + "\n" + message);
+
+        text.setStyle("-fx-fill: white;");
+
+        TextFlow flow = new TextFlow(text);
+
         dialogContainer.getChildren().add(flow);
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
     /**
@@ -74,5 +78,9 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getArkanianDialog(response, arkanianImage)
         );
         userInput.clear();
+
+        if (input.equalsIgnoreCase("bye")) {
+            javafx.application.Platform.exit();
+        }
     }
 }

@@ -1,0 +1,39 @@
+.root {
+    -fx-background-color: #1e1e1e;
+}
+
+/* ScrollPane background */
+.scroll-pane {
+    -fx-background: #1e1e1e;
+    -fx-background-color: transparent;
+}
+
+/* Chat container */
+.vbox {
+    -fx-background-color: #1e1e1e;
+}
+
+/* TextField */
+.text-field {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #888888;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+}
+
+/* Button */
+.button {
+    -fx-background-color: #008080;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
+
+/* Optional hover effect */
+.button:hover {
+    -fx-background-color: #00a0a0;
+}
+
+.text {
+    -fx-fill: white;
+}
