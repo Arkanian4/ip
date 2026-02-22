@@ -235,9 +235,7 @@ Attach one or more tags to a task to help categorize and filter them later.
 
 ### Format
 
-`tag INDEX /tag TAG1 TAG2 ... TAGN`
-
-INDEX refers to the task number in the list.
+`todo TASK /tag TAG1 TAG2 ... TAGN`
 
 TAG1...TAGN are the tags you want to assign to the task. Tags are optional but recommended for organization.
 
